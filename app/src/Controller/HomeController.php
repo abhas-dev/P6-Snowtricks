@@ -13,8 +13,7 @@ class HomeController extends AbstractController
     public function index(TrickRepository $trickRepository): Response
     {
         $tricks = $trickRepository->findAll();
-        if(!$tricks)
-        {
+        if (!$tricks) {
             throw $this->createNotFoundException("Aucune figure n'a été trouvée!");
         }
 

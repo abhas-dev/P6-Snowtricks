@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-
 use App\Factory\TrickCategoryFactory;
 use App\Factory\TrickFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -30,12 +29,10 @@ class AppFixtures extends Fixture
 //        {
 //            TrickFactory::createOne(['name' => $trick['name']];
 //        }
-        foreach($list as $key => $value)
-        {
+        foreach ($list as $key => $value) {
             $category = TrickCategoryFactory::findOrCreate(['name' => $key]);
 
-            foreach($value as $trick)
-            {
+            foreach ($value as $trick) {
                 TrickFactory::createOne(['name' => $trick, 'trickCategory' => $category]);
             }
         }
