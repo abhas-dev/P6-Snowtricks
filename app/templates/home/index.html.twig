@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+    <section class="hero">
+{#        <div class="px-4 py-5 text-center">#}
+{#            <h1 class="display-5 fw-bold">Centered hero</h1>#}
+{#        </div>#}
+    </section>
+    <section class="container py-5">
+        <div class="row">
+            {% for trick in tricks %}
+                <div class="col-3 pt-5">
+                    <div class="card-group">
+                        {% include "trick/_trick_card.html.twig" %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

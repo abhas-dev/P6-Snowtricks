@@ -1,0 +1,8 @@
+
+<div class="card rounded">
+    <img src="https://picsum.photos/300/200" class="card-img-top rounded-top" alt="Image du trick">
+    <div class="card-body rounded">
+        <h4 class="card-title"><a href="{{ path('trick_show', {'category_slug': trick.trickCategory.slug, 'slug': trick.slug}) }}">{{ trick.name }}</a></h4>
+        <h6 class="card-subtitle mb-2 text-muted">{{ trick.trickCategory.name }}</h6>
+    </div>
+</div>
