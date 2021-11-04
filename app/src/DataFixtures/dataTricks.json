@@ -1,0 +1,23 @@
+{
+  "Grabs": {
+    "1": "Truck Driver",
+    "2": "Indy",
+    "3": "Nose Grab",
+    "4": "Melon"
+  },
+  "Flips": {
+    "1": "Hakon Flip",
+    "2": "Mac Twist"
+  },
+  "Rotations": {
+    "1": "720",
+    "2": "Backside 180"
+  },
+  "Slides": {
+    "1": "50-50"
+  },
+  "Jumps": {
+    "1": "Nollie",
+    "2": "Ollie"
+  }
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Ollie",
+    "description": "",
+    "category": "Jumps"
+  },
+  {
+    "name": "Nollie",
+    "description": "",
+    "category": "Jumps"
+  },
+  {
+    "name": "Melon",
+    "description": "",
+    "category": "Grabs"
+  },
+  {
+    "name": "50-50",
+    "description": "",
+    "category": "Slides"
+  },
+  {
+    "name": "Nose Grab",
+    "description": "",
+    "category": "Grabs"
+  },
+  {
+    "name": "Frontside 180",
+    "description": "",
+    "category": "Rotations"
+  },
+  {
+    "name": "Indy",
+    "description": "",
+    "category": "Grabs"
+  },
+  {
+    "name": "Backside 180",
+    "description": "",
+    "category": "Rotations"
+  },
+  {
+    "name": "Mac Twist",
+    "description": "",
+    "category": "Flips"
+  },
+  {
+    "name": "Hakon Flip",
+    "description": "",
+    "category": "Flips"
+  },
+  {
+    "name": "720",
+    "description": "",
+    "category": "Rotations"
+  },
+  {
+    "name": "Truck Driver",
+    "description": "",
+    "category": "Grabs"
+  }
+]
