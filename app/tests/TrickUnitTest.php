@@ -40,8 +40,8 @@ class TrickUnitTest extends TestCase
             ->setSlug('slug')
             ->setDescription('trick is true')
             ->setTrickCategory(new TrickCategory())
-            ->setCreatedAt(DateTime::createFromFormat('U', time()) )
-            ->setUpdatedAt(DateTime::createFromFormat('U', time()) );
+            ->setCreatedAt(DateTime::createFromFormat('U', time()))
+            ->setUpdatedAt(DateTime::createFromFormat('U', time()));
 
         $this->assertFalse($trick->getName() === false);
         $this->assertFalse($trick->getSlug() === false);
@@ -49,7 +49,6 @@ class TrickUnitTest extends TestCase
         $this->assertFalse($trick->getTrickCategory() === false);
         $this->assertFalse($trick->getCreatedAt() === false);
         $this->assertFalse($trick->getUpdatedAt() === false);
-
     }
 
     /** @test */

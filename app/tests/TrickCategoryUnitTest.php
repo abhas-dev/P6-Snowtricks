@@ -29,7 +29,6 @@ class TrickCategoryUnitTest extends TestCase
 
         $this->assertFalse($trickCategory->getName() === false);
         $this->assertFalse($trickCategory->getSlug() === false);
-
     }
 
     /** @test */
@@ -39,7 +38,5 @@ class TrickCategoryUnitTest extends TestCase
 
         $this->assertEmpty($trickCategory->getName());
         $this->assertEmpty($trickCategory->getSlug());
-
-
     }
 }
