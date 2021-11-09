@@ -13,10 +13,6 @@ class HomeController extends AbstractController
     public function index(TrickRepository $trickRepository): Response
     {
         $tricks = $trickRepository->findAll();
-        if(!$tricks)
-        {
-            throw $this->createNotFoundException("Aucune figure n'a été trouvée!");
-        }
 
         return $this->render('home/index.html.twig', compact('tricks'));
     }

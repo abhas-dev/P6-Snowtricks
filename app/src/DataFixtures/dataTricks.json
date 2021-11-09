@@ -11,7 +11,8 @@
   },
   "Rotations": {
     "1": "720",
-    "2": "Backside 180"
+    "2": "Frontside 180",
+    "3": "Backside 180"
   },
   "Slides": {
     "1": "50-50"

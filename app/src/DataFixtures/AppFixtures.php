@@ -12,7 +12,6 @@ class AppFixtures extends Fixture
 {
     public function getTricksArrayFromJson(): array
     {
-//        $tricksJson = file_get_contents('src/DataFixtures/dataTricks.json');
         $tricksJson = file_get_contents('src/DataFixtures/dataTricks.json');
         return json_decode($tricksJson, true);
     }
@@ -26,10 +25,6 @@ class AppFixtures extends Fixture
     {
         $list = $this->getTricksArrayFromJson();
 
-//        foreach($tricks as $trick)
-//        {
-//            TrickFactory::createOne(['name' => $trick['name']];
-//        }
         foreach($list as $key => $value)
         {
             $category = TrickCategoryFactory::findOrCreate(['name' => $key]);
