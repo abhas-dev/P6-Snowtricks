@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Trick;
 use App\Repository\TrickRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,11 +17,22 @@ class TrickController extends AbstractController
         $this->trickRepository = $trickRepository;
     }
 
-    #[Route('/{category_slug}/{slug}', name: 'trick_show')]
-    public function show(string $slug): Response
-    {
-        $trick = $this->trickRepository->findOneBy(compact('slug'));
+//    #[Route('/{category_slug}/{slug}', name: 'trick_show')]
+//    public function show(string $slug): Response
+//    {
+//        $trick = $this->trickRepository->findOneBy(compact('slug'));
+//
+//        if(!$trick)
+//        {
+//            throw $this->createNotFoundException("Ce trick n'existe pas");
+//        }
+//
+//        return $this->render('trick/show.html.twig', compact('trick'));
+//    }
 
-        return $this->render('trick/index.html.twig', compact('trick'));
+    #[Route('/{category_slug}/{slug}', name: 'trick_show')]
+    public function show(Trick $trick): Response
+    {
+        return $this->render('trick/show.html.twig', compact('trick'));
     }
 }

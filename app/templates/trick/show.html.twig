@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ trick.name }}{% endblock %}
+
+{% block body %}
+    <section class="container rounded border border-2 my-5 p-0">
+        <img src="https://picsum.photos/1400/700  " alt="" class="img-fluid rounded-top">
+
+        <div class="row m-5">
+
+            <div class="col-lg-6">
+                <div class="row">
+                <h3 class="media-title">Videos</h3>
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-4 mb-sm-2">
+                        <div class="ratio ratio-16x9">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/gxV7wOz_WI4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mb-sm-2">
+                        <div class="ratio ratio-16x9">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/gxV7wOz_WI4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="ratio ratio-16x9">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/gxV7wOz_WI4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="row">
+                    <h3 class="media-title">Images</h3>
+                </div>
+                <div class="row">
+
+                    <div class="col-lg-4 mb-sm-2">
+                        <div class="card rounded">
+                            <div class="card-body p-0">
+                                <img src="{{ asset('img/trick1-sm.jpg') }}" class="card-img-top rounded" alt="Image du trick">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mb-sm-2">
+                        <div class="card rounded">
+                            <div class="card-body p-0">
+                                {#                                <img src="{{ '@images/trick1-sm.jpg' }}" class="card-img-top rounded-top" alt="Image du trick">#}
+                                <img src="{{ asset('img/trick1-sm.jpg') }}" class="card-img-top rounded" alt="Image du trick">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mb-sm-2">
+                        <div class="card rounded">
+                            <div class="card-body p-0">
+                                {#                                <img src="{{ '@images/trick1-sm.jpg' }}" class="card-img-top rounded-top" alt="Image du trick">#}
+                                <img src="{{ asset('img/trick1-sm.jpg') }}" class="card-img-top rounded" alt="Image du trick">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row p-5">
+            <h2>{{ trick.name }}</h2>
+            <p><small>Crée le {{ trick.createdAt | date('d/m/Y H:i') }} Par: </small><strong>user</strong></p>
+            <p class="mx-auto"><span class="badge bg-info">{{ trick.trickCategory.name }}</span></p>
+            <p class="lead">{{ trick.description }}</p>
+        </div>
+    </section>
+{% endblock %}
