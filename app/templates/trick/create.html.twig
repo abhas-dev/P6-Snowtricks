@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un trick{% endblock %}
+
+{% block body %}
+    <section class="container my-5">
+        <h2>Ajouter un trick</h2>
+        {{ form_start(form) }}
+
+        {{ form_widget(form) }}
+
+        {{ form_end(form) }}
+    </section>
+{% endblock %}
