@@ -32,5 +32,10 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash \
     \
     &&  pecl install apcu && docker-php-ext-enable apcu
 
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install --global yarn
+
+
 # On créé un utilisateur avec le même gid/uid que le local
 RUN addgroup --system redpanda --gid 1000 && adduser --system redpanda --uid 1000 --ingroup redpanda
