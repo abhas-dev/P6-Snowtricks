@@ -1,11 +1,12 @@
 {
     "devDependencies": {
         "@symfony/stimulus-bridge": "^2.0.0",
-        "@symfony/webpack-encore": "^1.0.0",
+        "@symfony/webpack-encore": "^1.6.1",
         "core-js": "^3.0.0",
+        "font-awesome": "^4.7.0",
         "regenerator-runtime": "^0.13.2",
         "stimulus": "^2.0.0",
-        "webpack-notifier": "^1.6.0"
+        "webpack-notifier": "^1.14.1"
     },
     "license": "UNLICENSED",
     "private": true,
@@ -14,5 +15,8 @@
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"
+    },
+    "dependencies": {
+        "bootstrap": "^5.1.3"
     }
 }

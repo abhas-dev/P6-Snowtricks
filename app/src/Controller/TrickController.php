@@ -7,6 +7,7 @@ use App\Entity\TrickImage;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -54,21 +55,21 @@ class TrickController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            /** @var UploadedFile[] $imageFiles */
-            $imageFiles = $form->get('trickImages')->getData();
 
-            if($imageFiles)
+            $imageTricks = $trick->getTrickImages();
+            if($imageTricks)
             {
-                foreach($imageFiles as $image)
+                foreach($imageTricks as $image)
                 {
-                    $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                    $file = $image->getFile();
+                    $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
                     // this is needed to safely include the file name as part of the URL
                     $safeFilename = $slugger->slug($originalFilename);
-                    $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
+                    $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 
                     // Move the file to the directory where brochures are stored
                     try {
-                        $image->move(
+                            $file->move(
                             $this->getParameter('trickImages_directory'),
                             $newFilename
                         );
@@ -79,9 +80,9 @@ class TrickController extends AbstractController
 
                     // updates the 'brochureFilename' property to store the PDF file name
                     // instead of its contents
-                    $trickImage = new TrickImage();
-                    $trickImage->setName($newFilename);
-                    $trick->addTrickImage($trickImage);
+//                    $trickImage = new TrickImage();
+                    $image->setName($newFilename);
+                    $trick->addTrickImage($image);
 
                 }
 

@@ -6,7 +6,7 @@ use App\Entity\Trick;
 use App\Entity\TrickCategory;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -41,26 +41,35 @@ class TrickType extends AbstractType
                 'required' => false
 
             ])
-            ->add('trickImages', FileType::class, [
-                'label' => 'Image',
-                'mapped' => false,
-                'multiple' => true,
-                'required' => false,
-//                'constraints' => [
-//                    new File([
-//                        'mimeTypes' => [
-//                            'image/jpeg',
-//                            'image/jpg',
-//                            'image/png'
-//                        ],
-//                        'mimeTypesMessage' => 'Veuillez entrer un fichier valide',
-//                    ])
-//                ]
-
+//            ->add('trickImages', FileType::class, [
+//                'label' => 'Image',
+//                'mapped' => false,
+//                'multiple' => true,
+//                'required' => false,
+////                'constraints' => [
+////                    new File([
+////                        'mimeTypes' => [
+////                            'image/jpeg',
+////                            'image/jpg',
+////                            'image/png'
+////                        ],
+////                        'mimeTypesMessage' => 'Veuillez entrer un fichier valide',
+////                    ])
+////                ]
+//
+//            ])
+            ->add('trickImages', CollectionType::class, [
+                'label' => false,
+                'entry_options' => ['label' => false],
+                'entry_type' => TrickImageType::class,
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'required' => false
             ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer le trick'
-            ])
+//            ->add('submit', SubmitType::class, [
+//                'attr' => ['class' => ['btn', 'btn-primary']]
+//            ])
         ;
     }
 
