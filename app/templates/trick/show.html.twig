@@ -3,6 +3,7 @@
 {% block title %}{{ trick.name }}{% endblock %}
 
 {% block body %}
+
     <section class="container rounded border border-2 my-5 p-0">
         <img src="https://picsum.photos/1400/700  " alt="" class="img-fluid rounded-top">
 
@@ -38,18 +39,31 @@
                 </div>
                 <div class="row">
 
-                    <div class="col-lg-4 mb-sm-2">
+{#                    {% for trickImage in trick.trickImages %}#}
+{#                        {{ trickImage.name }}#}
+{#                        <div class="col-lg-4 mb-sm-2">#}
+{#                            <div class="card rounded">#}
+{#                                <div class="card-body p-0">#}
+{#                                    <img src="{{ asset(trickImage.path) }}" class="card-img-top rounded" alt="Image du trick">#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    {% endfor %}#}
+{#                    {{ for i in 0..3}}#}
+{#                    {{ endfor }}#}
+
+
+                                        <div class="col-lg-4 mb-sm-2">
                         <div class="card rounded">
                             <div class="card-body p-0">
-                                <img src="{{ asset('build/images/trick1-sm.jpg') }}" class="card-img-top rounded" alt="Image du trick">
+                                <img src="{{ asset('build/images/hero.jpg') }}" class="card-img-top rounded" alt="Image du trick">
                             </div>
-                        </div>
                     </div>
 
                     <div class="col-lg-4 mb-sm-2">
                         <div class="card rounded">
                             <div class="card-body p-0">
-                                {#                                <img src="{{ '@images/trick1-sm.jpg' }}" class="card-img-top rounded-top" alt="Image du trick">#}
+{#                                                                <img src="{{ '@images/trick1-sm.jpg' }}" class="card-img-top rounded-top" alt="Image du trick">#}
                                 <img src="{{ asset('build/images/hero.jpg') }}" class="card-img-top rounded" alt="Image du trick">
                             </div>
                         </div>
@@ -58,8 +72,8 @@
                     <div class="col-lg-4 mb-sm-2">
                         <div class="card rounded">
                             <div class="card-body p-0">
-                                {#                                <img src="{{ '@images/trick1-sm.jpg' }}" class="card-img-top rounded-top" alt="Image du trick">#}
-                                <img src="{{ asset('build/images/trick1-sm.jpg') }}" class="card-img-top rounded" alt="Image du trick">
+{#                                                                <img src="{{ '@images/trick1-sm.jpg' }}" class="card-img-top rounded-top" alt="Image du trick">#}
+                                <img src="{{ asset('build/images/hero.jpg') }}" class="card-img-top rounded" alt="Image du trick">
                             </div>
                         </div>
                     </div>

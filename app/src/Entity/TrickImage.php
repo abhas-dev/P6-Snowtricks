@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TrickImageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\Entity(repositoryClass: TrickImageRepository::class)]
@@ -22,6 +23,9 @@ class TrickImage
 
     /** @var UploadedFile */
     private $file;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $filename;
 
     public function getId(): ?int
     {
@@ -68,4 +72,25 @@ class TrickImage
         $this->file = $file;
     }
 
+    /**
+     * @return string
+     */
+    public function getPath(): string
+    {
+//        $params = new ParameterBag();
+//        return $params->get('trickImages_directory').'/'.$this->getName();
+        return 'uploads/tricks/'.$this->getFilename();
+    }
+
+    public function getFilename(): ?string
+    {
+        return $this->filename;
+    }
+
+    public function setFilename(string $filename): self
+    {
+        $this->filename = $filename;
+
+        return $this;
+    }
 }

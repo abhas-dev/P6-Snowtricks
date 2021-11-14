@@ -15,6 +15,7 @@ const addFormToCollection = (e) => {
     const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
 
     const item = document.createElement('li');
+    item.className= "my-2";
 
     item.innerHTML = collectionHolder
         .dataset

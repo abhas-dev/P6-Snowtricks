@@ -32,7 +32,7 @@ class TrickUnitTest extends TestCase
     }
 
     /** @test */
-    public function TrickIsFasle()
+    public function TrickIsFalse()
     {
         $trick = new Trick();
 

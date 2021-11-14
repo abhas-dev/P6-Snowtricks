@@ -67,9 +67,15 @@ class TrickType extends AbstractType
                 'allow_delete' => true,
                 'required' => false
             ])
-//            ->add('submit', SubmitType::class, [
-//                'attr' => ['class' => ['btn', 'btn-primary']]
-//            ])
+            ->add('trickVideos', CollectionType::class, [
+                'label' => false,
+                'entry_options' => ['label' => false],
+                'entry_type' => TrickVideoType::class,
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'required' => false
+            ])
         ;
     }
 

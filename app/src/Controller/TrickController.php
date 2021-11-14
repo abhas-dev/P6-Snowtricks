@@ -6,6 +6,7 @@ use App\Entity\Trick;
 use App\Entity\TrickImage;
 use App\Form\TrickType;
 use App\Repository\TrickRepository;
+use App\Service\ImageService;
 use Doctrine\ORM\EntityManagerInterface;
 use phpDocumentor\Reflection\Types\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,7 +48,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/create', name: 'trick_create')]
-    public function create(Request $request, SluggerInterface $slugger): Response
+    public function create(Request $request, SluggerInterface $slugger, ImageService $imageService): Response
     {
         $trick = new Trick();
         $form = $this->createForm(TrickType::class, $trick);
@@ -55,45 +56,19 @@ class TrickController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $trickImages = $trick->getTrickImages();
 
-            $imageTricks = $trick->getTrickImages();
-            if($imageTricks)
-            {
-                foreach($imageTricks as $image)
+                foreach($trickImages as $trickImage)
                 {
-                    $file = $image->getFile();
-                    $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-                    // this is needed to safely include the file name as part of the URL
-                    $safeFilename = $slugger->slug($originalFilename);
-                    $newFilename = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
+                    $imageService->moveImageToFinalDirectory($trickImage);
+                  }
+            
+            $trick->setSlug(strtolower($slugger->slug($trick->getName())));
+            $trick->setCreatedAt(new \DateTime('now'));
+            $this->entityManager->persist($trick);
+            $this->entityManager->flush();
 
-                    // Move the file to the directory where brochures are stored
-                    try {
-                            $file->move(
-                            $this->getParameter('trickImages_directory'),
-                            $newFilename
-                        );
-                    } catch (FileException $e) {
-                        // ... handle exception if something happens during file upload
-                        throw new FileException('Il y a eu un probleme lors de l\'envoi d\'un fichier');
-                    }
-
-                    // updates the 'brochureFilename' property to store the PDF file name
-                    // instead of its contents
-//                    $trickImage = new TrickImage();
-                    $image->setName($newFilename);
-                    $trick->addTrickImage($image);
-
-                }
-
-                $trick->setSlug(strtolower($slugger->slug($trick->getName())));
-                $trick->setCreatedAt(new \DateTime('now'));
-                $this->entityManager->persist($trick);
-                $this->entityManager->flush();
-
-                return $this->redirectToRoute('homepage');
-            }
-
+            return $this->redirectToRoute('homepage');
         }
 
         return $this->renderForm('trick/create.html.twig', compact('form'));
