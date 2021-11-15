@@ -58,11 +58,11 @@ class TrickController extends AbstractController
         {
             $trickImages = $trick->getTrickImages();
 
-                foreach($trickImages as $trickImage)
-                {
-                    $imageService->moveImageToFinalDirectory($trickImage);
-                  }
-            
+            foreach($trickImages as $trickImage)
+            {
+                $imageService->moveImageToFinalDirectory($trickImage);
+            }
+
             $trick->setSlug(strtolower($slugger->slug($trick->getName())));
             $trick->setCreatedAt(new \DateTime('now'));
             $this->entityManager->persist($trick);

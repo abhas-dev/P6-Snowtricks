@@ -9,6 +9,7 @@ use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -45,7 +46,7 @@ class ImageService
 //        }
 //    }
 
-    public function moveImageToFinalDirectory(TrickImage $trickImage)
+    public function moveImageToFinalDirectory(TrickImage $trickImage): string
     {
         $file = $trickImage->getFile();
         $newFilename = $this->generateNewFileName($file);
@@ -55,6 +56,7 @@ class ImageService
                 $this->getTargetDirectory(),
                 $newFilename
             );
+            return $newFilename;
         } catch (FileException $e) {
             // ... handle exception if something happens during file upload
             $this->logger->error('failed to upload image: ' . $e->getMessage());
@@ -62,11 +64,16 @@ class ImageService
         }
     }
 
-    private function generateNewFileName(UploadedFile $file): string
+    private function generateNewFileName(File $file): string
     {
-        $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        if($file instanceof UploadedFile)
+        {
+            $originalFilename = $file->getClientOriginalName();
+        } else {
+            $originalFilename = $file->getFilename();
+        }
         // this is needed to safely include the file name as part of the URL
-        $safeFilename = $this->slugger->slug($originalFilename);
+        $safeFilename = $this->slugger->slug(pathinfo($originalFilename, PATHINFO_FILENAME));
         $this->imageNewName = $safeFilename.'-'.uniqid().'.'.$file->guessExtension();
 
         return $this->imageNewName;

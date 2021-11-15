@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TrickImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\Entity(repositoryClass: TrickImageRepository::class)]
@@ -57,17 +58,17 @@ class TrickImage
     }
 
     /**
-     * @return UploadedFile|null
+     * @return File|null
      */
-    public function getFile(): ?UploadedFile
+    public function getFile(): ?File
     {
         return $this->file;
     }
 
     /**
-     * @param UploadedFile $file
+     * @param File $file
      */
-    public function setFile(UploadedFile $file): void
+    public function setFile(File $file): void
     {
         $this->file = $file;
     }

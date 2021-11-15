@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 
 use App\Factory\TrickCategoryFactory;
 use App\Factory\TrickFactory;
+use App\Factory\TrickImageFactory;
 use App\Factory\VideoProviderFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -27,6 +28,7 @@ class AppFixtures extends Fixture
         return ['Youtube', 'Vimeo', 'Daylimotion'];
     }
 
+
     public function load(ObjectManager $manager): void
     {
         // Tricks + Categories
@@ -38,7 +40,7 @@ class AppFixtures extends Fixture
 
             foreach($value as $trick)
             {
-                TrickFactory::createOne(['name' => $trick, 'trickCategory' => $category]);
+                TrickFactory::createOne(['name' => $trick, 'trickCategory' => $category, 'trickImages' => TrickImageFactory::createMany(3)]);
             }
         }
 

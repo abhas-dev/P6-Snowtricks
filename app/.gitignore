@@ -9,6 +9,7 @@
 /var/
 /vendor/
 /assets/img/
+/src/DataFixtures/images
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
