@@ -5,6 +5,8 @@ namespace App\DataFixtures;
 
 use App\Factory\TrickCategoryFactory;
 use App\Factory\TrickFactory;
+use App\Factory\TrickImageFactory;
+use App\Factory\VideoProviderFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -21,8 +23,15 @@ class AppFixtures extends Fixture
         return ['Grabs', 'Rotations', 'Slides', 'Jumps', 'Flips'];
     }
 
+    public function getVideoProviders(): array
+    {
+        return ['Youtube', 'Vimeo', 'Daylimotion'];
+    }
+
+
     public function load(ObjectManager $manager): void
     {
+        // Tricks + Categories
         $list = $this->getTricksArrayFromJson();
 
         foreach($list as $key => $value)
@@ -31,11 +40,15 @@ class AppFixtures extends Fixture
 
             foreach($value as $trick)
             {
-                TrickFactory::createOne(['name' => $trick, 'trickCategory' => $category]);
+                TrickFactory::createOne(['name' => $trick, 'trickCategory' => $category, 'trickImages' => TrickImageFactory::createMany(3)]);
             }
         }
 
-
+        // Video Providers
+        foreach($this->getVideoProviders() as $provider)
+        {
+            VideoProviderFactory::createOne(['name' => $provider]);
+        }
 
         $manager->flush();
     }

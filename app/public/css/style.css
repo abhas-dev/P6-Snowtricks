@@ -1,14 +1,13 @@
+/*.hero{*/
+/*    background: url(../../public/img/hero.jpg) center center; !*fixed*!*/
+/*    -webkit-background-size: cover;*/
+/*    -moz-background-size: cover;*/
+/*    -o-background-size: cover;*/
+/*    background-size: cover;*/
+/*    height: 85vh;*/
+/*    width: 100%;*/
+/*}*/
 
-.hero{
-    background: url(/img/hero.jpg) center center; /*fixed*/
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    height: 85vh;
-    width: 100%;
-}
-
-.media-title{
-    font-weight: bold;
-}
+/*.media-title{*/
+/*    font-weight: bold;*/
+/*}*/

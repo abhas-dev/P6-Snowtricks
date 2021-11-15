@@ -3,6 +3,7 @@
 {% block title %}{{ trick.name }}{% endblock %}
 
 {% block body %}
+
     <section class="container rounded border border-2 my-5 p-0">
         <img src="https://picsum.photos/1400/700  " alt="" class="img-fluid rounded-top">
 
@@ -14,23 +15,32 @@
                 </div>
                 <div class="row">
 
-                    <div class="col-lg-4 mb-sm-2">
-                        <div class="ratio ratio-16x9">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/gxV7wOz_WI4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    {% for trickVideo in trick.trickVideos %}
+                        <div class="col-lg-4 mb-sm-2">
+                            <div class="ratio ratio-16x9">
+                                <iframe width="560" height="315" src="{{ trickVideo.url }}" title="{{ trickVideo.name }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="col-lg-4 mb-sm-2">
-                        <div class="ratio ratio-16x9">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/gxV7wOz_WI4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="ratio ratio-16x9">
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/gxV7wOz_WI4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
+
+{#                    <div class="col-lg-4 mb-sm-2">#}
+{#                        <div class="ratio ratio-16x9">#}
+{#                            <iframe width="560" height="315" src="https://www.youtube.com/embed/gxV7wOz_WI4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>#}
+{#                        </div>#}
+{#                    </div>#}
+
+{#                    <div class="col-lg-4 mb-sm-2">#}
+{#                        <div class="ratio ratio-16x9">#}
+{#                            <iframe width="560" height="315" src="https://www.youtube.com/embed/gxV7wOz_WI4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                        </div>#}
+{#                    </div>#}
+
+{#                    <div class="col-lg-4">#}
+{#                        <div class="ratio ratio-16x9">#}
+{#                            <iframe width="560" height="315" src="https://www.youtube.com/embed/gxV7wOz_WI4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                        </div>#}
+{#                    </div>#}
+
 
             <div class="col-lg-6">
                 <div class="row">
@@ -38,33 +48,44 @@
                 </div>
                 <div class="row">
 
-                    <div class="col-lg-4 mb-sm-2">
-                        <div class="card rounded">
-                            <div class="card-body p-0">
-                                <img src="{{ asset('img/trick1-sm.jpg') }}" class="card-img-top rounded" alt="Image du trick">
+                    {% for trickImage in trick.trickImages %}
+                        <div class="col-lg-4 mb-sm-2">
+                            <div class="card rounded">
+                                <div class="card-body p-0">
+                                    <img src="{{ asset(trickImage.path) }}" class="card-img-top rounded" alt="{{ trickImage.name }}">
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endfor %}
+{#                    {{ for i in 0..3}}#}
+{#                    {{ endfor }}#}
 
-                    <div class="col-lg-4 mb-sm-2">
-                        <div class="card rounded">
-                            <div class="card-body p-0">
-                                {#                                <img src="{{ '@images/trick1-sm.jpg' }}" class="card-img-top rounded-top" alt="Image du trick">#}
-                                <img src="{{ asset('img/trick1-sm.jpg') }}" class="card-img-top rounded" alt="Image du trick">
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-lg-4 mb-sm-2">
-                        <div class="card rounded">
-                            <div class="card-body p-0">
-                                {#                                <img src="{{ '@images/trick1-sm.jpg' }}" class="card-img-top rounded-top" alt="Image du trick">#}
-                                <img src="{{ asset('img/trick1-sm.jpg') }}" class="card-img-top rounded" alt="Image du trick">
-                            </div>
-                        </div>
-                    </div>
+{#                    <div class="col-lg-4 mb-sm-2">#}
+{#                        <div class="card rounded">#}
+{#                            <div class="card-body p-0">#}
+{#                                <img src="{{ asset('build/images/hero.jpg') }}" class="card-img-top rounded" alt="Image du trick">#}
+{#                            </div>#}
+{#                    </div>#}
+
+{#                    <div class="col-lg-4 mb-sm-2">#}
+{#                        <div class="card rounded">#}
+{#                            <div class="card-body p-0">#}
+{#                                                                <img src="{{ '@images/trick1-sm.jpg' }}" class="card-img-top rounded-top" alt="Image du trick">#}
+{#                                <img src="{{ asset('build/images/hero.jpg') }}" class="card-img-top rounded" alt="Image du trick">#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+
+{#                    <div class="col-lg-4 mb-sm-2">#}
+{#                        <div class="card rounded">#}
+{#                            <div class="card-body p-0">#}
+{#                                                                <img src="{{ '@images/trick1-sm.jpg' }}" class="card-img-top rounded-top" alt="Image du trick">#}
+{#                                <img src="{{ asset('build/images/hero.jpg') }}" class="card-img-top rounded" alt="Image du trick">#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
                 </div>
-
             </div>
         </div>
         <div class="row p-5">

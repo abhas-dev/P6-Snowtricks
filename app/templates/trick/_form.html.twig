@@ -1,0 +1,63 @@
+    {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.description) }}
+        {{ form_row(form.trickCategory) }}
+    {#    #}{#    tableau de champs#}
+    {#    {{ form_row(trickImages) }}#}
+    <h4>Images</h4>
+    <ul
+            class="pictures"
+            data-index="{{ form.trickImages|length > 0 ? form.trickImages|last.vars.name + 1 : 0 }}"
+            data-prototype="{{ form_widget(form.trickImages.vars.prototype)|e('html_attr') }}"
+    >
+        <button type="button" class="add_item_link" data-collection-holder-class="pictures">Ajouter une image</button>
+        {% for image in form.trickImages %}
+            <li class="item">{{ form_row(image.name) }}</li>
+            <li class="item">{{ form_row(image.file) }}</li>
+        {% endfor %}
+    </ul>
+
+    <h4>Videos</h4>
+    <ul
+            class="videos"
+            data-index="{{ form.trickVideos|length > 0 ? form.trickVideos|last.vars.name + 1 : 0 }}"
+            data-prototype="{{ form_widget(form.trickVideos.vars.prototype)|e('html_attr') }}"
+    >
+        <button type="button" class="add_item_link" data-collection-holder-class="videos">Ajouter une video</button>
+        {% for video in form.trickVideos %}
+            <li class="item">{{ form_row(video.name) }}</li>
+            <li class="item">{{ form_row(video.url) }}</li>
+            <li class="item">{{ form_row(video.provider) }}</li>
+        {% endfor %}
+    </ul>
+
+{#    <div class="my-3">#}
+{#        <button type="button" class="btn btn-success add_item_link btn-new" data-collection-holder-class="trickImages" id="new-image">Ajouter une image</button>#}
+{#    </div>#}
+
+{#    <div#}
+{#            id="images"#}
+{#            class="row"#}
+{#            data-prototype="{{ form_widget(form.trickImages.vars.prototype)|e('html_attr') }}"#}
+{#            data-index="{{ form.trickImages|length  }}"#}
+{#    >#}
+{#            {% for image in form.trickImages %}#}
+{#                <div>#}
+{#                    <a href="#" class="btn-remove"><i class="fa fa-times"></i>test</a>#}
+{#                    {{ form_errors(trickImageForm) }}#}
+{#                    {{ form_row(trickImageForm) }}#}
+{#                </div>#}
+{#                <div class="form-group">#}
+{#                    <button type="button" class="btn btn-danger btn-remove">Remove</button>#}
+{#                </div>#}
+{#            {% endfor %}#}
+
+{#        <a href="#" class="add_item_link"><i class="fa fa-plus-circle"></i>Ajouter une image</a>#}
+{#    </div>#}
+
+
+{#    {{ form_row(form.submit, {'label': 'Enregistrer le trick'}) }}#}
+    <div class="my-3">
+        <button type="submit" class="btn btn-primary">Enregistrer le trick</button>
+    </div>
+    {{ form_end(form) }}
