@@ -39,6 +39,10 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: TrickVideo::class, cascade: ['persist'], orphanRemoval: true)]
     private $trickVideos;
 
+    #[ORM\OneToOne(targetEntity: TrickImage::class, cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(onDelete: "SET NULL")]
+    private $mainTrickImage;
+
 
     public function __construct()
     {
@@ -179,6 +183,18 @@ class Trick
                 $trickVideo->setTrick(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMainTrickImage(): ?TrickImage
+    {
+        return $this->mainTrickImage;
+    }
+
+    public function setMainTrickImage(?TrickImage $mainTrickImage): self
+    {
+        $this->mainTrickImage = $mainTrickImage;
 
         return $this;
     }

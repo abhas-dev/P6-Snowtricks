@@ -5,10 +5,17 @@
 {% block body %}
 
     <section class="container rounded border border-2 my-5 p-0">
-        <img src="https://picsum.photos/1400/700  " alt="" class="img-fluid rounded-top">
+        {% if trick.mainTrickImage is null %}
+            <img src="{{ asset("uploads/tricks/snowboard-default.jpg") }}" class="card-img-top rounded-top" alt="Image d'un trick par defaut">
+        {% else %}
+            {% for trickImage in trick.trickImages %}
+                {% if trickImage.id == trick.mainTrickImage.id %}
+                    <img src="{{ asset(trickImage.path) }}" class="img-fluid rounded-top" alt="{{ trickImage.name }}">
+                {% endif %}
+            {% endfor %}
+        {% endif %}
 
         <div class="row m-5">
-
             <div class="col-lg-6">
                 <div class="row">
                 <h3 class="media-title">Videos</h3>
@@ -24,23 +31,6 @@
                     {% endfor %}
                 </div>
             </div>
-
-{#                    <div class="col-lg-4 mb-sm-2">#}
-{#                        <div class="ratio ratio-16x9">#}
-{#                            <iframe width="560" height="315" src="https://www.youtube.com/embed/gxV7wOz_WI4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>#}
-{#                        </div>#}
-{#                    </div>#}
-
-{#                    <div class="col-lg-4 mb-sm-2">#}
-{#                        <div class="ratio ratio-16x9">#}
-{#                            <iframe width="560" height="315" src="https://www.youtube.com/embed/gxV7wOz_WI4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                        </div>#}
-{#                    </div>#}
-
-{#                    <div class="col-lg-4">#}
-{#                        <div class="ratio ratio-16x9">#}
-{#                            <iframe width="560" height="315" src="https://www.youtube.com/embed/gxV7wOz_WI4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                        </div>#}
-{#                    </div>#}
-
 
             <div class="col-lg-6">
                 <div class="row">

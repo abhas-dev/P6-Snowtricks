@@ -1,6 +1,24 @@
 
-<div class="card rounded">
-    <img src="{{ asset(trick.trickImages[0].path) }}" class="card-img-top rounded-top" alt="Image du trick">
+<div class="card rounded box">
+{#    <img src="{{ asset(trick.trickImages[0].path) }}" class="card-img-top rounded-top" alt="Image du trick">#}
+{#    {% include "trick/mainTrickImage.html.twig" %}#}
+{#    {% set mainImageTrickId = trick.mainTrickImage.id %}#}
+{#    {% for trickImage in trick.trickImages %}#}
+{#        {% if trickImage.id == trick.mainTrickImage.id %}#}
+{#            <img src="{{ asset(trickImage.path) }}" class="img-fluid box-img-top card-img-top rounded-top" alt="{{ trickImage.name }}">#}
+{#        {% elseif trick.mainTrickImage.id is null%}#}
+{#            <img src="{{ asset(trickImage.path) }}" class="box-img-top card-img-top rounded-top" alt="Image d'un trick par defaut">#}
+{#        {% endif %}#}
+{#    {% endfor %}#}
+    {% if trick.mainTrickImage is null %}
+        <img src="{{ asset("uploads/tricks/snowboard-default.jpg") }}" class="img-fluid box-img-top card-img-top rounded-top" alt="Image d'un trick par defaut">
+    {% else %}
+        {% for trickImage in trick.trickImages %}
+            {% if trickImage.id == trick.mainTrickImage.id %}
+                <img src="{{ asset(trickImage.path) }}" class="box-img-top card-img-top rounded-top" alt="{{ trickImage.name }}">
+            {% endif %}
+        {% endfor %}
+    {% endif %}
     <div class="card-body rounded">
         <h4 class="card-title"><a href="{{ path('trick_show', {'category_slug': trick.trickCategory.slug, 'slug': trick.slug}) }}">{{ trick.name }}</a></h4>
         <h6 class="card-subtitle mb-2 text-muted">{{ trick.trickCategory.name }}</h6>
