@@ -58,6 +58,9 @@ final class TrickFactory extends ModelFactory
                  if(!$trick->getSlug()){
                      $trick->setSlug(strtolower($this->slugger->slug($trick->getName())));
                  }
+                 if(!$trick->getMainTrickImage()){
+                    $trick->setMainTrickImage(self::faker()->randomElement($trick->getTrickImages()));
+                 }
              })
         ;
     }

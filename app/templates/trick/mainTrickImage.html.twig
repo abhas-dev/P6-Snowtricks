@@ -1,0 +1,9 @@
+
+{% set mainImageTrickId = trick.mainTrickImage.id %}
+{% for trickImage in trick.trickImages %}
+    {% if trickImage.id == mainImageTrickId %}
+        <img src="{{ asset(trickImage.path) }}" class="img-fluid card-img-top rounded-top" alt="{{ trickImage.name }}">
+    {% elseif mainImageTrickId is null%}
+        <img src="{{ asset(trickImage.path) }}" class="card-img-top rounded-top" alt="Image d'un trick par defaut">
+    {% endif %}
+{% endfor %}
