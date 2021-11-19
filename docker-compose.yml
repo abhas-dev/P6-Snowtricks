@@ -7,7 +7,7 @@ services:
     volumes:
       - db-data:/var/lib/mysql
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     networks:
       - dev
 
@@ -38,7 +38,7 @@ services:
     build: docker # on build le dockerfile dans php/
     container_name: www_docker_sf
     user: "1000:1000"
-#    user: ${CURRENT_UID}
+    #    user: ${CURRENT_UID}
     ports:
       - "8741:80"
     volumes:
