@@ -128,7 +128,7 @@ class Trick
     }
 
     /**
-     * @return Collection|TrickImage[]
+     * @return Collection
      */
     public function getTrickImages(): Collection
     {

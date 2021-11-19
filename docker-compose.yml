@@ -38,6 +38,7 @@ services:
     build: docker # on build le dockerfile dans php/
     container_name: www_docker_sf
 #    user: "1000:1000"
+#    user: ${CURRENT_UID}
     ports:
       - "8741:80"
     volumes:

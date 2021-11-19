@@ -1,6 +1,6 @@
 FROM php:8.0.12-apache-bullseye
 
-WORKDIR /var/www/
+WORKDIR /var/www/app
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 

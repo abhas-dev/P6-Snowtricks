@@ -6,7 +6,7 @@
 
     <section class="container rounded border border-2 my-5 p-0">
         {% if trick.mainTrickImage is null %}
-            <img src="{{ asset("uploads/tricks/snowboard-default.jpg") }}" class="card-img-top rounded-top" alt="Image d'un trick par defaut">
+            <img src="{{ asset("uploads/snowboard-default.jpg") }}" class="card-img-top rounded-top" alt="Image d'un trick par defaut">
         {% else %}
             {% for trickImage in trick.trickImages %}
                 {% if trickImage.id == trick.mainTrickImage.id %}
