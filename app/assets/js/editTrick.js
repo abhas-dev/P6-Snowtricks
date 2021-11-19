@@ -31,18 +31,14 @@ links.forEach(link => {
 
 // Set Main Picture
 const radios = document.querySelectorAll('.js-mainPicture');
-// const link = document.querySelectorAll('[data-mainPicture]');
 
 async function onSelectMainPicture(e){
-    // console.log(this.dataset.mainpicture);
     try{
-        const response = await axios.get(this.dataset.mainpicture);
+        const response = await axios.post(this.dataset.mainpicture);
         console.log(response);
     } catch(error){
         console.log(error);
     }
-
-
 }
 
 radios.forEach(radio => radio.addEventListener('change', onSelectMainPicture));

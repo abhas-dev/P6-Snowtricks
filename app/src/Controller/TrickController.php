@@ -91,17 +91,14 @@ class TrickController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-//            dd($form);
             foreach($trickImages = $trick->getTrickImages() as $trickImage)
             {
                 if(!$trickImage->getId())
                 {
                     $this->imageService->moveImageToFinalDirectory($trickImage);
                 }
-//                dd($trickImages);
 //                $trickImage->setTrick($trick);
             }
-
 //            $this->entityManager->persist($trickImages);
             $this->entityManager->flush();
             $this->addFlash('success', 'Le trick a bien été modifié');
@@ -112,10 +109,21 @@ class TrickController extends AbstractController
         return $this->renderForm('trick/edit.html.twig', compact('form', 'trick'));
     }
 
-    #[Route('/trick/{slug}/delete', name: 'trick_delete', methods: ['DELETE'])]
-    public function deleteTrick()
+    #[Route('/trick/{slug}/delete', name: 'trick_delete', methods: ['POST'])]
+    public function delete(Request $request, Trick $trick)
     {
+        $submittedToken = $request->request->get('token');
+        if($this->isCsrfTokenValid("delete-item", $submittedToken))
+        {
+            foreach($trick->getTrickImages() as $trickImage)
+            {
+                $this->imageService->removeUploadedImage($trickImage);
+            }
+            $this->entityManager->remove($trick);
+            $this->entityManager->flush();
+        }
 
+        return $this->redirectToRoute('homepage', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/trick/{slug}/edit-tab', name: 'trick_edit-tab')]

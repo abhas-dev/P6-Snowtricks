@@ -25,9 +25,13 @@
                     <h4 class="card-title"><a href="{{ path('trick_show', {'category_slug': trick.trickCategory.slug, 'slug': trick.slug}) }}">{{ trick.name }}</a></h4>
                     <h6 class="card-subtitle mb-2 text-muted">{{ trick.trickCategory.name }}</h6>
                 </div>
-                <div class="col-xl-3">
-                    <a class="fs-4 m-2" href="{{ path('trick_edit', {'slug': trick.slug }) }}" data-delete><i class="fa fa-edit"></i></a>
-                    <a class="fs-4 m-2" href="{{ path('trick_delete', {'slug': trick.slug }) }}" data-delete data-token="{{ csrf_token('delete-trick') }}"><i class="fa fa-trash"></i></a>
+                <div class="col-xl-3 d-sm-flex flex-xl-column">
+                    <button class="btn fs-4"><a class="" href="{{ path('trick_edit', {'slug': trick.slug }) }}" data-delete><i class="fa fa-edit"></i></a></button>
+                    <form action="{{ url('trick_delete', { 'slug': trick.slug }) }}" method="post">
+                        <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+                        <button type="submit" class="btn fs-4"><i class="fa fa-trash "></i></button>
+                    </form>
+{#                    <a class="fs-4 m-2" href="{{ path('trick_delete', {'slug': trick.slug, 'csrf_token': 'remove' }) }}"><i class="fa fa-trash"></i></a>#}
                 </div>
              </div>
         </div>
