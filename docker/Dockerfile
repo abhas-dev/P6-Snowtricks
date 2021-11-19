@@ -39,3 +39,4 @@ RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - \
 
 # On créé un utilisateur avec le même gid/uid que le local
 RUN addgroup --system redpanda --gid 1000 && adduser --system redpanda --uid 1000 --ingroup redpanda
+RUN #usermod -u 1000 www-data
