@@ -14,6 +14,9 @@ Encore
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
 
+    .addEntry('formImage', './assets/js/formImage.js')
+    .addEntry('editTrick', './assets/js/editTrick.js')
+
     /*
      * ENTRY CONFIG
      *

@@ -65,7 +65,8 @@ class TrickType extends AbstractType
                 'by_reference' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'required' => false
+                'required' => false,
+                'error_bubbling' => false
             ])
             ->add('trickVideos', CollectionType::class, [
                 'label' => false,
@@ -74,7 +75,8 @@ class TrickType extends AbstractType
                 'by_reference' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'required' => false
+                'required' => false,
+                'error_bubbling' => false
             ])
         ;
     }
@@ -83,6 +85,12 @@ class TrickType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Trick::class,
+            'csrf_protection' => false,
+//            // the name of the hidden HTML field that stores the token
+//            'csrf_field_name' => '_token',
+//            // an arbitrary string used to generate the value of the token
+//            // using a different string for each form improves its security
+//            'csrf_token_id'   => 'edit_trick',
         ]);
     }
 }

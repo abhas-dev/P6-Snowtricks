@@ -31,6 +31,12 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        $files = glob('public/uploads/tricks/*'); // get all file names
+        foreach($files as $file){
+            if(is_file($file)) {
+                unlink($file);
+            }
+        }
         // Tricks + Categories
         $list = $this->getTricksArrayFromJson();
 

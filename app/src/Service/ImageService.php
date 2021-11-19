@@ -84,13 +84,19 @@ class ImageService
         return $this->imageNewName;
     }
 
-    public function removeUploadedImage(): void
+    public function removeUploadedImage(TrickImage $trickImage): void
     {
-        if($this->filesystem->exists('tempFilename'))
-        {
-            unlink($this->tempFilename);
+        try {
+            $fileLocation = $trickImage->getPath();
+
+            if($this->filesystem->exists($fileLocation))
+            {
+                unlink($fileLocation);
+            }
+        } catch (FileException $exception){
+            $this->logger->error('failed to remove image: ' . $exception->getMessage());
+            throw new FileException('Il y a eu un probleme lors de la suppression du fichier');
         }
-        $this->logger->error('failed to remove image: ' . $e->getMessage());
     }
 
     public function getTargetDirectory()
