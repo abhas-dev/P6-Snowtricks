@@ -2,7 +2,6 @@
 
 namespace App\DataFixtures;
 
-
 use App\Factory\TrickCategoryFactory;
 use App\Factory\TrickFactory;
 use App\Factory\TrickImageFactory;
@@ -32,27 +31,24 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $files = glob('public/uploads/tricks/*'); // get all file names
-        foreach($files as $file){
-            if(is_file($file)) {
+        foreach ($files as $file) {
+            if (is_file($file)) {
                 unlink($file);
             }
         }
         // Tricks + Categories
         $list = $this->getTricksArrayFromJson();
 
-        foreach($list as $key => $value)
-        {
+        foreach ($list as $key => $value) {
             $category = TrickCategoryFactory::findOrCreate(['name' => $key]);
 
-            foreach($value as $trick)
-            {
+            foreach ($value as $trick) {
                 TrickFactory::createOne(['name' => $trick, 'trickCategory' => $category, 'trickImages' => TrickImageFactory::createMany(3)]);
             }
         }
 
         // Video Providers
-        foreach($this->getVideoProviders() as $provider)
-        {
+        foreach ($this->getVideoProviders() as $provider) {
             VideoProviderFactory::createOne(['name' => $provider]);
         }
 
