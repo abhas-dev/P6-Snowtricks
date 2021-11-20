@@ -91,17 +91,14 @@ class TrickController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-//            dd($form);
             foreach($trickImages = $trick->getTrickImages() as $trickImage)
             {
                 if(!$trickImage->getId())
                 {
                     $this->imageService->moveImageToFinalDirectory($trickImage);
                 }
-//                dd($trickImages);
 //                $trickImage->setTrick($trick);
             }
-
 //            $this->entityManager->persist($trickImages);
             $this->entityManager->flush();
             $this->addFlash('success', 'Le trick a bien été modifié');
@@ -113,9 +110,30 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/{slug}/delete', name: 'trick_delete', methods: ['DELETE'])]
-    public function deleteTrick()
+    public function delete(Request $request, Trick $trick)
     {
+        $data = json_decode($request->getContent(), true);
 
+        if($this->isCsrfTokenValid("delete-trick", $data['_token']))
+        {
+            foreach($trick->getTrickImages() as $trickImage)
+            {
+                $this->imageService->removeUploadedImage($trickImage);
+            }
+            $this->entityManager->remove($trick);
+            $this->entityManager->flush();
+
+            return $this->json([
+                'code' => 200,
+                'message' => 'success'
+            ], 200);
+            //        return $this->redirectToRoute('homepage', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->json([
+            'code' => 400,
+            'message' => 'error'
+        ], 400);
     }
 
     #[Route('/trick/{slug}/edit-tab', name: 'trick_edit-tab')]

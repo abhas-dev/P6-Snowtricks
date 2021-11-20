@@ -14,9 +14,6 @@ Encore
     // only needed for CDN's or sub-directory deploy
     //.setManifestKeyPrefix('build/')
 
-    .addEntry('formImage', './assets/js/formImage.js')
-    .addEntry('editTrick', './assets/js/editTrick.js')
-
     /*
      * ENTRY CONFIG
      *
@@ -24,6 +21,9 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
+    .addEntry('formImage', './assets/js/formImage.js')
+    .addEntry('editTrick', './assets/js/editTrick.js')
+    .addEntry('removeTrick', './assets/js/removeTrick.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

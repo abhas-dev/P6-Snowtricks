@@ -55,7 +55,7 @@ class TrickImageController extends AbstractController
         ], 400);
     }
 
-    #[Route('/trick/{slug}/mainPicture/{id}', name: 'trick_setTricksMainPicture')]
+    #[Route('/trick/{slug}/mainPicture/{id}', name: 'trick_setTricksMainPicture', methods: ['POST'])]
     public function setTricksMainPicture(string $slug, int $id, TrickImageRepository $imageRepository): Response
     {
         $trick = $this->trickRepository->findOneBy(compact('slug'));
