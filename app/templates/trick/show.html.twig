@@ -39,12 +39,15 @@
                 <div class="row">
 
                     {% for trickImage in trick.trickImages %}
-                        <div class="col-lg-4 mb-sm-2">
-                            <div class="card rounded">
-                                <div class="card-body p-0">
-                                    <img src="{{ asset(trickImage.path) }}" class="card-img-top rounded" alt="{{ trickImage.name }}">
-                                </div>
-                            </div>
+{#                        <div class="col-lg-4 mb-sm-2">#}
+{#                            <div class="card rounded">#}
+{#                                <div class="card-body p-0">#}
+{#                                    <img src="{{ asset(trickImage.path) }}" class="card-img-top rounded" alt="{{ trickImage.name }}">#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+                        <div class="col-lg-4 mb-sm-2 d-flex ">
+                            <img src="{{ asset(trickImage.path) }}" class="img-thumbnail rounded" alt="{{ trickImage.name }}">
                         </div>
                     {% endfor %}
 {#                    {{ for i in 0..3}}#}

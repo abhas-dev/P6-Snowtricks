@@ -33,9 +33,9 @@ links.forEach(link => {
 const radios = document.querySelectorAll('.js-mainPicture');
 
 async function onSelectMainPicture(e){
+    e.preventDefault();
     try{
         const response = await axios.post(this.dataset.mainpicture);
-        console.log(response);
     } catch(error){
         console.log(error);
     }

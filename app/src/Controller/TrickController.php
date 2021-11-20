@@ -109,11 +109,12 @@ class TrickController extends AbstractController
         return $this->renderForm('trick/edit.html.twig', compact('form', 'trick'));
     }
 
-    #[Route('/trick/{slug}/delete', name: 'trick_delete', methods: ['POST'])]
+    #[Route('/trick/{slug}/delete', name: 'trick_delete', methods: ['DELETE'])]
     public function delete(Request $request, Trick $trick)
     {
-        $submittedToken = $request->request->get('token');
-        if($this->isCsrfTokenValid("delete-item", $submittedToken))
+        $data = json_decode($request->getContent(), true);
+
+        if($this->isCsrfTokenValid("delete-trick", $data['_token']))
         {
             foreach($trick->getTrickImages() as $trickImage)
             {
@@ -121,9 +122,18 @@ class TrickController extends AbstractController
             }
             $this->entityManager->remove($trick);
             $this->entityManager->flush();
+
+            return $this->json([
+                'code' => 200,
+                'message' => 'success'
+            ], 200);
+            //        return $this->redirectToRoute('homepage', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->redirectToRoute('homepage', [], Response::HTTP_SEE_OTHER);
+        return $this->json([
+            'code' => 400,
+            'message' => 'error'
+        ], 400);
     }
 
     #[Route('/trick/{slug}/edit-tab', name: 'trick_edit-tab')]
