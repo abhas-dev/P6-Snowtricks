@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Trick;
 use App\Entity\TrickImage;
-use App\Form\TrickType;
+use App\Form\Auth\Auth\Trick\TrickType;
 use App\Repository\TrickImageRepository;
 use App\Repository\TrickRepository;
 use App\Service\ImageService;
@@ -82,6 +82,8 @@ class TrickController extends AbstractController
     #[Route('/trick/{slug}/edit', name: 'trick_edit')]
     public function edit(Trick $trick, Request $request,TrickImageRepository $imageRepository)
     {
+//        $trickImages = $trick->getTrickImages();
+//        dd($trickImages->toArray());
         $form = $this->createForm(TrickType::class, $trick);
 
 //        /** @var Collection<TrickImage> $trickImages */

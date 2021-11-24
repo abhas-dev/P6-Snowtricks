@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Form;
+namespace App\Form\Trick;
 
 use App\Entity\TrickImage;
 use Symfony\Component\Form\AbstractType;

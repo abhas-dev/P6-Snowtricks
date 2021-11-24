@@ -17,7 +17,7 @@ function onClickDeleteBtn(e) {
                 data: {"_token": this.dataset.token}
             })
                 .then(response => response.data)
-                .then(data => {data.code === 200 ? this.parentElement.remove() : alert(data.message)})
+                .then(data => {data.code === 200 ? this.parentElement.parentElement.remove() : alert(data.message)})
                 .catch(error => {
                     console.log(error);
                 })
