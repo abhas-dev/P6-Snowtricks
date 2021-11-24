@@ -7,7 +7,6 @@ use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class ImageToImageTrickTransformer implements DataTransformerInterface
 {
-
     public function transform($value)
     {
         // TODO: Implement transform() method.

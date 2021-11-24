@@ -22,15 +22,15 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(
-            $userPasswordHasherInterface->hashPassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
+                $userPasswordHasherInterface->hashPassword(
+                $user,
+                $form->get('plainPassword')->getData()
+            )
             );
             $user->setIsVerified('false');
             $user->setCreatedAt(new \DateTime('now'));
 
-            if($form['agreeTerms']->getData()){
+            if ($form['agreeTerms']->getData()) {
                 $user->agreeTermes();
             }
 
