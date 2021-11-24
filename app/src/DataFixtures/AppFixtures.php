@@ -6,6 +6,7 @@ namespace App\DataFixtures;
 use App\Factory\TrickCategoryFactory;
 use App\Factory\TrickFactory;
 use App\Factory\TrickImageFactory;
+use App\Factory\UserFactory;
 use App\Factory\VideoProviderFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -55,6 +56,11 @@ class AppFixtures extends Fixture
         {
             VideoProviderFactory::createOne(['name' => $provider]);
         }
+
+        // User
+        UserFactory::createOne(['email' => 'test@test.fr', 'password' => '12345678', 'username' => 'test', 'roles' => ['ROLE_ADMIN']]);
+        UserFactory::createOne(['email' => 'user@test.fr', 'password' => '12345678', 'username' => 'test1']);
+        UserFactory::createMany(10);
 
         $manager->flush();
     }
