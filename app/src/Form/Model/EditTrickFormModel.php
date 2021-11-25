@@ -15,6 +15,7 @@ class EditTrickFormModel
     public $trickVideo;
     public $trickImage;
     public $newTrickImages;
+    public $newTrickVideos;
 
     public static function fromTrick(Trick $trick): self
     {

@@ -49,6 +49,16 @@ class EditTrickType extends AbstractType
                 'required' => false,
                 'error_bubbling' => false
             ])
+            ->add('newTrickVideos', CollectionType::class, [
+                'label' => false,
+                'entry_options' => ['label' => false],
+                'entry_type' => TrickVideoType::class,
+                'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'required' => false,
+                'error_bubbling' => false
+            ])
         ;
     }
 

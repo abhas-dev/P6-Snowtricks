@@ -9,19 +9,26 @@ let links = document.querySelectorAll('[data-delete]');
 // Delete Image
 function onClickDeleteBtn(e) {
     e.preventDefault();
-    const url = this.href;
-        if (confirm('Voulez-vous vraiment supprimer cette image?')) {
-            axios.delete(this.getAttribute('href'), {
-                headers: {'X-Requested-With': 'XMLHttpRequest'},
-                // On recupere le token dans le dataset l'attribut token
-                data: {"_token": this.dataset.token}
+    // const url = this.href;
+    const url = this.getAttribute('href');
+    let id = url.match( /image-delete\/(.+)/)[1];
+
+    if (confirm('Voulez-vous vraiment supprimer cette image?')) {
+        axios.delete(this.getAttribute('href'), {
+            headers: {'X-Requested-With': 'XMLHttpRequest'},
+            // On recupere le token dans le dataset l'attribut token
+            data: {"_token": this.dataset.token}
+        })
+            .then(response => response.data)
+            .then(data => {
+                let trickImageDiv = document.getElementById("trickImage-" + id);
+                data.code === 200 ? trickImageDiv.parentNode.removeChild(trickImageDiv) : alert(data.message);
+                // data.code === 200 ? this.parentElement.parentElement.remove() : alert(data.message)
             })
-                .then(response => response.data)
-                .then(data => {data.code === 200 ? this.parentElement.parentElement.remove() : alert(data.message)})
-                .catch(error => {
-                    console.log(error);
-                })
-        }
+            .catch(error => {
+                console.log(error);
+            })
+    }
 }
 
 links.forEach(link => {
