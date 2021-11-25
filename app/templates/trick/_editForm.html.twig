@@ -1,15 +1,30 @@
 
 {{ form_start(form) }}
     {{ form_row(form.name) }}
-    {{ form_errors(form.name) }}
-
     {{ form_row(form.description) }}
-    {{ form_errors(form.description) }}
-
     {{ form_row(form.trickCategory) }}
-    {{ form_errors(form.trickCategory) }}
 
-{#    {{ form_widget(form.trickImages) }}#}
+    <h4>Images</h4>
+    <ul
+            class="pictures"
+            data-index="{{ form.newTrickImages|length > 0 ? form.newTrickImages|last.vars.name + 1 : 0 }}"
+            data-prototype="{{ form_widget(form.newTrickImages.vars.prototype)|e('html_attr') }}"
+    >
+        <button type="button" class="add_item_link" data-collection-holder-class="pictures">Ajouter une image</button>
+        {% for image in form.newTrickImages %}
+            {% if not image.name %}
+                <li class="item">{{ form_row(image.name) }}</li>
+                <li class="item">{{ form_row(image.file) }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+
+    <button class="btn btn-primary">
+        <i class="fa fa-save"></i>
+        Enregistrer les modifications
+    </button>
+{{ form_end(form) }}
+
     <div class="row">
         {% for trickImage in trick.trickImages %}
             <div class="col-lg-3 mb-sm-2 d-flex justify-content-between align-items-center">
@@ -27,20 +42,9 @@
         {% endfor %}
     </div>
 
-    <h4>Images</h4>
-    <ul
-            class="pictures"
-            data-index="{{ form.trickImages|length > 0 ? form.trickImages|last.vars.name + 1 : 0 }}"
-            data-prototype="{{ form_widget(form.trickImages.vars.prototype)|e('html_attr') }}"
-    >
-        <button type="button" class="add_item_link" data-collection-holder-class="pictures">Ajouter une image</button>
-        {% for image in form.trickImages %}
-            {% if not image.name %}
-                <li class="item">{{ form_row(image.name) }}</li>
-                <li class="item">{{ form_row(image.file) }}</li>
-            {% endif %}
-        {% endfor %}
-    </ul>
+
+
+
 
 {#    <div class="row">#}
 {#        {% for trickImage in trick.trickImages %}#}
@@ -50,12 +54,6 @@
 {#            </div>#}
 {#        {% endfor %}#}
 {#    </div>#}
-    {{ form_errors(form.trickImages) }}
-
-    <button class="btn btn-primary">
-        <i class="fa fa-save"></i>
-        Enregistrer les modifications
-    </button>
+{#    {{ form_errors(form.trickImages) }}#}
 
 {#{{ form_end(form , {render_rest: false}) }}#}
-{{ form_end(form) }}

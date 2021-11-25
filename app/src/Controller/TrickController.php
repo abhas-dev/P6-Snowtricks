@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Trick;
 use App\Entity\TrickImage;
-use App\Form\Auth\Auth\Trick\TrickType;
+use App\Form\Model\EditTrickFormModel;
+use App\Form\Trick\EditTrickType;
+use App\Form\Trick\TrickType;
 use App\Repository\TrickImageRepository;
 use App\Repository\TrickRepository;
 use App\Service\ImageService;
@@ -12,6 +14,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Form;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -79,29 +83,62 @@ class TrickController extends AbstractController
         return $this->renderForm('trick/create.html.twig', compact('form'));
     }
 
+//    #[Route('/trick/{slug}/edit', name: 'trick_edit')]
+//    public function edit(Trick $trick, Request $request,TrickImageRepository $imageRepository)
+//    {
+//        // On injecte les données du trick dans le model (DTO)
+//        $trickModel = EditTrickFormModel::fromTrick($trick);
+////        dd($trickModel);
+//        $form = $this->createForm(EditTrickType::class, $trickModel);
+//        $form->handleRequest($request);
+//
+//        if($form->isSubmitted() && $form->isValid())
+//        {
+////            foreach($images = $form->getExtraData())
+////            /** @var EditTrickFormModel $trickModel */
+////            $trickModel = $form->getData();
+////            dd($trickModel);
+////            foreach($trickImages = $trick->getTrickImages() as $trickImage)
+////            {
+////                if(!$trickImage->getId())
+////                {
+////                    $this->imageService->moveImageToFinalDirectory($trickImage);
+////                }
+////            }
+//
+//            $this->entityManager->flush();
+//            $this->addFlash('success', 'Le trick a bien été modifié');
+//
+//            return $this->redirectToRoute('trick_show', ["category_slug" => $trick->getTrickCategory()->getSlug(), "slug" => $trick->getSlug()]);
+//        }
+//
+//        return $this->renderForm('trick/edit.html.twig', compact('form', 'trick'));
+//    }
+
     #[Route('/trick/{slug}/edit', name: 'trick_edit')]
-    public function edit(Trick $trick, Request $request,TrickImageRepository $imageRepository)
+    public function edit(Trick $trick, Request $request)
     {
-//        $trickImages = $trick->getTrickImages();
-//        dd($trickImages->toArray());
-        $form = $this->createForm(TrickType::class, $trick);
-
-//        /** @var Collection<TrickImage> $trickImages */
-//        $trickImages = $trick->getTrickImages()->toArray();
-
+        // On injecte les données du trick dans le model (DTO)
+        $trickModel = EditTrickFormModel::fromTrick($trick);
+        // On crée un formulaire de type Edit et on lui associe la classe du DTO
+        $form = $this->createForm(EditTrickType::class, $trickModel);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
-            foreach($trickImages = $trick->getTrickImages() as $trickImage)
+            $trick->setName($trickModel->name);
+            $trick->setDescription($trickModel->description);
+            $trick->setTrickCategory($trickModel->trickCategory);
+
+            $newTrickImagesForm = $form->get('newTrickImages')->getData();
+            foreach($newTrickImagesForm as $newTrickImage)
             {
-                if(!$trickImage->getId())
-                {
-                    $this->imageService->moveImageToFinalDirectory($trickImage);
+                if(!$newTrickImage->getId()){
+                    $trick->addTrickImage($newTrickImage);
+                    $this->imageService->moveImageToFinalDirectory($newTrickImage);
                 }
-//                $trickImage->setTrick($trick);
             }
-//            $this->entityManager->persist($trickImages);
+
             $this->entityManager->flush();
             $this->addFlash('success', 'Le trick a bien été modifié');
 
@@ -110,6 +147,38 @@ class TrickController extends AbstractController
 
         return $this->renderForm('trick/edit.html.twig', compact('form', 'trick'));
     }
+
+//    #[Route('/trick/{slug}/edit-images', name: 'trick_edit-images')]
+//    public function editTrickImages(Trick $trick, Request $request,TrickImageRepository $imageRepository)
+//    {
+//        // On injecte les données du trick dans le model (DTO)
+//        $trickModel = EditTrickFormModel::fromTrick($trick);
+////        dd($trickModel);
+//        $form = $this->createForm(EditTrickType::class, $trickModel);
+//        $form->handleRequest($request);
+//
+//        if($form->isSubmitted() && $form->isValid())
+//        {
+////            foreach($images = $form->getExtraData())
+////            /** @var EditTrickFormModel $trickModel */
+////            $trickModel = $form->getData();
+////            dd($trickModel);
+////            foreach($trickImages = $trick->getTrickImages() as $trickImage)
+////            {
+////                if(!$trickImage->getId())
+////                {
+////                    $this->imageService->moveImageToFinalDirectory($trickImage);
+////                }
+////            }
+//
+//            $this->entityManager->flush();
+//            $this->addFlash('success', 'Le trick a bien été modifié');
+//
+//            return $this->redirectToRoute('trick_show', ["category_slug" => $trick->getTrickCategory()->getSlug(), "slug" => $trick->getSlug()]);
+//        }
+//
+//        return $this->renderForm('trick/edit.html.twig', compact('form', 'trick'));
+//    }
 
     #[Route('/trick/{slug}/delete', name: 'trick_delete', methods: ['DELETE'])]
     public function delete(Request $request, Trick $trick)
@@ -137,6 +206,18 @@ class TrickController extends AbstractController
             'message' => 'error'
         ], 400);
     }
+
+//    private function handleTrickImages(FormInterface $form, Trick $trick)
+//    {
+//        $trickImagesFromForm = $form->get('trickImages');
+//        dd($trick->getTrickImages()->count());
+//
+//        foreach($trickImagesFromForm as $trickImageFromForm)
+//        {
+//            $trickImage = $trickImageFromForm->getData();
+//            dd($trickImage);
+//        }
+//    }
 
     #[Route('/trick/{slug}/edit-tab', name: 'trick_edit-tab')]
     public function changeDivContent(string $slug, Request $request): Response
