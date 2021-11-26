@@ -28,13 +28,13 @@ class TrickVoter extends Voter
         switch ($attribute) {
             case 'CAN_EDIT':
                 // logic to determine if the user can EDIT
-                if(in_array('ROLE_ADMIN', $user->getRoles()) || $subject->getAuthor() === $user){
+                if (in_array('ROLE_ADMIN', $user->getRoles()) || $subject->getAuthor() === $user) {
                     return true;
                 }
                 return false;
                 break;
             case 'CAN_DELETE':
-                if(in_array('ROLE_ADMIN', $user->getRoles()) || $subject->getAuthor() === $user){
+                if (in_array('ROLE_ADMIN', $user->getRoles()) || $subject->getAuthor() === $user) {
                     return true;
                 }
                 return false;
