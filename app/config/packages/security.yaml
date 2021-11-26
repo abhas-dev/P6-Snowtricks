@@ -27,15 +27,14 @@ security:
                 max_attempts: 5
 
             remember_me:
-#                secret: '%env(APP_SECRET)%'
                 secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
 #                always_remember_me: true
                 path: /
 
             form_login:
-                username_parameter: login[username]
-                password_parameter: login[password]
+                username_parameter: username
+                password_parameter: password
                 enable_csrf: true
                 login_path: security_login # emplacement du formulaire de login
                 check_path: security_login # emplacement de l'url à ecouter(envoi des credentials)

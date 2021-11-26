@@ -12,6 +12,7 @@ use App\Repository\TrickRepository;
 use App\Service\ImageService;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Form;
@@ -54,6 +55,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/create', name: 'trick_create')]
+    #[IsGranted('ROLE_USER', message: 'Vous devez etre connecté pour pouvoir creer un trick')]
     public function create(Request $request): Response
     {
         $trick = new Trick();
@@ -87,6 +89,12 @@ class TrickController extends AbstractController
     #[Route('/trick/{slug}/edit', name: 'trick_edit')]
     public function edit(Trick $trick, Request $request)
     {
+        if(!$trick){
+            throw $this->createNotFoundException("Ce trick n'existe pas");
+        }
+
+        $this->denyAccessUnlessGranted('CAN_EDIT', $trick, "Vous n'avez pas le droit d'acceder à ce trick");
+
         // On injecte les données du trick dans le model (DTO)
         $trickModel = EditTrickFormModel::fromTrick($trick);
         // On crée un formulaire de type Edit et on lui associe la classe du DTO
@@ -109,6 +117,12 @@ class TrickController extends AbstractController
     #[Route('/trick/{slug}/delete', name: 'trick_delete', methods: ['DELETE'])]
     public function delete(Request $request, Trick $trick)
     {
+        if(!$trick){
+            throw $this->createNotFoundException("Ce trick n'existe pas");
+        }
+
+        $this->denyAccessUnlessGranted('CAN_DELETE', $trick, "Vous n'avez pas le droit d'acceder à ce trick");
+
         $data = json_decode($request->getContent(), true);
 
         if($this->isCsrfTokenValid("delete-trick", $data['_token']))

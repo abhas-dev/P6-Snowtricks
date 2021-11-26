@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\Auth\LoginType;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -20,7 +21,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/login', name: "login")]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(AuthenticationUtils $authenticationUtils, FormFactoryInterface $formFactory): Response
     {
         $user = $this->getUser();
          if ($user) {
@@ -32,7 +33,8 @@ class SecurityController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
-        $form = $this->createForm(LoginType::class, ['username' => $lastUsername]);
+        // Pour pouvoir modifier le prefixe du formulaire (login['username'])
+        $form = $formFactory->createNamed('',LoginType::class, ['username' => $lastUsername]);
 
         return $this->renderForm('security/login.html.twig', compact('lastUsername', 'error', 'form'));
     }
