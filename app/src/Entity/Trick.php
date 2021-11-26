@@ -50,6 +50,9 @@ class Trick
     #[ORM\JoinColumn(onDelete: "SET NULL")]
     private $mainTrickImage;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tricks')]
+    private $author;
+
 
     public function __construct()
     {
@@ -202,6 +205,18 @@ class Trick
     public function setMainTrickImage(?TrickImage $mainTrickImage): self
     {
         $this->mainTrickImage = $mainTrickImage;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

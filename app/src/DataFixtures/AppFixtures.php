@@ -38,6 +38,18 @@ class AppFixtures extends Fixture
                 unlink($file);
             }
         }
+
+        // User
+        UserFactory::createOne(['email' => 'test@test.fr', 'password' => '12345678', 'username' => 'test', 'roles' => ['ROLE_ADMIN']]);
+        UserFactory::createOne(['email' => 'user@test.fr', 'password' => '12345678', 'username' => 'test1']);
+        UserFactory::createMany(10);
+
+        // Video Providers
+        foreach($this->getVideoProviders() as $provider)
+        {
+            VideoProviderFactory::createOne(['name' => $provider]);
+        }
+
         // Tricks + Categories
         $list = $this->getTricksArrayFromJson();
 
@@ -47,20 +59,13 @@ class AppFixtures extends Fixture
 
             foreach($value as $trick)
             {
-                TrickFactory::createOne(['name' => $trick, 'trickCategory' => $category, 'trickImages' => TrickImageFactory::createMany(3)]);
+                TrickFactory::createOne(['name' => $trick, 'trickCategory' => $category, 'trickImages' => TrickImageFactory::createMany(3), 'author' => UserFactory::random()]);
             }
         }
 
-        // Video Providers
-        foreach($this->getVideoProviders() as $provider)
-        {
-            VideoProviderFactory::createOne(['name' => $provider]);
-        }
 
-        // User
-        UserFactory::createOne(['email' => 'test@test.fr', 'password' => '12345678', 'username' => 'test', 'roles' => ['ROLE_ADMIN']]);
-        UserFactory::createOne(['email' => 'user@test.fr', 'password' => '12345678', 'username' => 'test1']);
-        UserFactory::createMany(10);
+
+
 
         $manager->flush();
     }

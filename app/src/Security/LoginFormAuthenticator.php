@@ -35,15 +35,11 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function authenticate(Request $request): PassportInterface
     {
-        $login = $request->request->get('login', '');
-        $username = $login['username'];
-        $password = $login['password'];
-
-        $request->getSession()->set(Security::LAST_USERNAME, $username);
+        $request->getSession()->set(Security::LAST_USERNAME, 'username');
 
         return new Passport(
-            new UserBadge($username),
-            new PasswordCredentials($password),
+            new UserBadge('username'),
+            new PasswordCredentials('password'),
             [
                 new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token')),
                 new RememberMeBadge()
