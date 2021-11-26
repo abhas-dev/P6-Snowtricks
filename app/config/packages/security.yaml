@@ -1,56 +1,56 @@
 security:
-    enable_authenticator_manager: true
-    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
-    password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-        App\Entity\User:
-            algorithm: auto
+  enable_authenticator_manager: true
+  # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+  password_hashers:
+    Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: "auto"
+    App\Entity\User:
+      algorithm: auto
 
-    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
-    providers:
-        # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
-            entity:
-                class: App\Entity\User
-                property: username
-    firewalls:
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        main:
-            lazy: true # Allow to not authenticate until it needs to
-            provider: app_user_provider # Lie ce pare-feu au provider
-#            custom_authenticator: App\Security\LoginFormAuthenticator
-            entry_point: form_login
+  # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+  providers:
+    # used to reload user from session & other features (e.g. switch_user)
+    app_user_provider:
+      entity:
+        class: App\Entity\User
+        property: username
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    main:
+      lazy: true # Allow to not authenticate until it needs to
+      provider: app_user_provider # Lie ce pare-feu au provider
+      #            custom_authenticator: App\Security\LoginFormAuthenticator
+      entry_point: form_login
 
-            login_throttling:
-                max_attempts: 5
+      login_throttling:
+        max_attempts: 5
 
-            remember_me:
-                secret: '%kernel.secret%'
-                lifetime: 604800 # 1 week in seconds
-#                always_remember_me: true
-                path: /
+      remember_me:
+        secret: "%kernel.secret%"
+        lifetime: 604800 # 1 week in seconds
+        #                always_remember_me: true
+        path: /
 
-            form_login:
-                username_parameter: username
-                password_parameter: password
-                enable_csrf: true
-                login_path: security_login # emplacement du formulaire de login
-                check_path: security_login # emplacement de l'url à ecouter(envoi des credentials)
-            logout:
-                path: security_logout
-                # where to redirect after logout
-#                target: homepage
+      form_login:
+        username_parameter: username
+        password_parameter: password
+        enable_csrf: true
+        login_path: security_login # emplacement du formulaire de login
+        check_path: security_login # emplacement de l'url à ecouter(envoi des credentials)
+      logout:
+        path: security_logout
+        # where to redirect after logout
+  #                target: homepage
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
+  # activate different ways to authenticate
+  # https://symfony.com/doc/current/security.html#the-firewall
 
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+  # https://symfony.com/doc/current/security/impersonating_user.html
+  # switch_user: true
 
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
-    access_control:
-         - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+  # Easy way to control access for large sections of your site
+  # Note: Only the *first* access control that matches will be used
+  access_control:
+    - { path: ^/admin, roles: ROLE_ADMIN }
+    # - { path: ^/profile, roles: ROLE_USER }
