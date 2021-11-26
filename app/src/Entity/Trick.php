@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
@@ -16,12 +17,15 @@ class Trick
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'Le nom du trick est obligatoire')]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $slug;
 
     #[ORM\Column(type: 'text')]
+    #[Assert\NotBlank(message: 'La description du trick est obligatoire')]
+    #[Assert\Length(min: 50, minMessage: 'La description du trick doit faire au moins 50 caractères')]
     private $description;
 
     #[ORM\Column(type: 'datetime')]
@@ -31,12 +35,15 @@ class Trick
     private $updatedAt;
 
     #[ORM\ManyToOne(targetEntity: TrickCategory::class, inversedBy: 'tricks')]
+    #[Assert\NotBlank(message: 'Vous devez choisir une categorie')]
     private $trickCategory;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: TrickImage::class, cascade: ['persist'], orphanRemoval: true)]
+    #[Assert\Valid]
     private $trickImages;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: TrickVideo::class, cascade: ['persist'], orphanRemoval: true)]
+    #[Assert\Valid]
     private $trickVideos;
 
     #[ORM\OneToOne(targetEntity: TrickImage::class, cascade: ['persist', 'remove'])]

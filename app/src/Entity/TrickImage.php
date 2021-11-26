@@ -4,9 +4,9 @@ namespace App\Entity;
 
 use App\Repository\TrickImageRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrickImageRepository::class)]
 class TrickImage
@@ -17,12 +17,24 @@ class TrickImage
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'Le nom de l\'image est obligatoire')]
     private $name;
 
     #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'trickImages')]
     private $trick;
 
     /** @var UploadedFile */
+    #[Assert\Image(
+        maxSize: 1024,
+        minWidth: 200,
+        maxWidth: 400,
+        minHeight: 200,
+        maxHeight: 400,
+        mimeTypes: ['image/jpeg', 'image/jpg', 'image/png'],
+        mimeTypesMessage: 'Veuillez entrer un fichier valide',
+        allowPortrait: false,
+        allowPortraitMessage: "L'image doit etre au format paysage"
+    )]
     private $file;
 
     #[ORM\Column(type: 'string', length: 255)]
