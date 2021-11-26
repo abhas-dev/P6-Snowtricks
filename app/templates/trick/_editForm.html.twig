@@ -15,6 +15,7 @@
             {% if not image.name %}
                 <li class="item">{{ form_row(image.name) }}</li>
                 <li class="item">{{ form_row(image.file) }}</li>
+                {{ form_errors(image) }}
             {% endif %}
         {% endfor %}
     </ul>
