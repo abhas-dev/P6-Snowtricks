@@ -2,7 +2,6 @@
 
 namespace App\Form\Trick;
 
-
 use App\Entity\TrickCategory;
 use App\Form\Model\EditTrickFormModel;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -18,7 +17,7 @@ class EditTrickType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class,[
+            ->add('name', TextType::class, [
                 'label' => 'Nom du trick',
                 'attr' => [
                     'placeholder' => 'Nom du trick'
