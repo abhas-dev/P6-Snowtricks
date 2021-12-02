@@ -46,6 +46,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Trick::class)]
     private $tricks;
 
+    private $registrationToken;
+
+    private $accountMustBeVerifiedBefore;
+
+    private string $forgotPasswordToken;
+
+    private \DateTime $forgotPasswordTokenMustBeVerifiedBefore;
+
+    private \DateTime $ForgotPasswordTokenRequestedAt;
+
     public function __construct()
     {
         $this->tricks = new ArrayCollection();
@@ -221,6 +231,75 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $trick->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRegistrationToken(): ?string
+    {
+        return $this->registrationToken;
+    }
+
+    public function setRegistrationToken(?string $registrationToken): self
+    {
+        $this->registrationToken = $registrationToken;
+
+        return $this;
+    }
+
+    public function getAccountMustBeVerifiedBefore(): \DateTimeInterface
+    {
+        return $this->accountMustBeVerifiedBefore;
+    }
+
+    public function setAccountMustBeVerifiedBefore(\DateTimeInterface $accountMustBeVerifiedBefore): self
+    {
+        $this->accountMustBeVerifiedBefore = $accountMustBeVerifiedBefore;
+
+        return $this;
+    }
+
+    public function getForgotPasswordToken(): ?string
+    {
+        return $this->forgotPasswordToken;
+    }
+
+    public function setForgotPasswordToken(?string $forgotPasswordToken): self
+    {
+        $this->forgotPasswordToken = $forgotPasswordToken;
+
+        return $this;
+    }
+
+    public function getForgotPasswordTokenMustBeVerifiedBefore():  \DateTime
+    {
+        return $this->forgotPasswordTokenMustBeVerifiedBefore;
+    }
+
+    /**
+     * @param \DateTime $forgotPasswordTokenMustBeVerifiedBefore
+     */
+    public function setForgotPasswordTokenMustBeVerifiedBefore($forgotPasswordTokenMustBeVerifiedBefore): self
+    {
+        $this->forgotPasswordTokenMustBeVerifiedBefore = $forgotPasswordTokenMustBeVerifiedBefore;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getForgotPasswordTokenRequestedAt(): \DateTime
+    {
+        return $this->ForgotPasswordTokenRequestedAt;
+    }
+
+    /**
+     * @param \DateTime $ForgotPasswordTokenRequestedAt
+     */
+    public function setForgotPasswordTokenRequestedAt(\DateTime $ForgotPasswordTokenRequestedAt): self
+    {
+        $this->ForgotPasswordTokenRequestedAt = $ForgotPasswordTokenRequestedAt;
 
         return $this;
     }

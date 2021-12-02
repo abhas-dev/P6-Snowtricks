@@ -3,19 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Trick;
-use App\Entity\TrickImage;
 use App\Form\Model\EditTrickFormModel;
 use App\Form\Trick\EditTrickType;
 use App\Form\Trick\TrickType;
-use App\Repository\TrickImageRepository;
-use App\Repository\TrickRepository;
 use App\Service\ImageService;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

@@ -8,6 +8,8 @@ services:
       - db-data:/var/lib/mysql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    ports:
+      - "3306:3306"
     networks:
       - dev
 

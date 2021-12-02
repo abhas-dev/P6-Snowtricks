@@ -11,16 +11,8 @@
     </head>
     <body>
         {% include 'shared/_navbar.html.twig' %}
+        {% include 'shared/_flashbag.html.twig' %}
 
-        {% if app.flashes %}
-            {% for messages in app.flashes %}
-                <div class="alert alert-{{ rubrique }}">
-                    {% for message in messages %}
-                        <p>{{ message }}</p>
-                    {% endfor %}
-                </div>
-            {% endfor %}
-        {% endif %}
 {#        {{ dump(app) }}#}
         {% block body %}{% endblock %}
 

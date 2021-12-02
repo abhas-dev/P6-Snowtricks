@@ -25,20 +25,27 @@ class TrickVoter extends Voter
         }
 
         // ... (check conditions and return true to grant permission) ...
+        if(in_array('ROLE_ADMIN', $user->getRoles()))
+        {
+            return true;
+        }
+
         switch ($attribute) {
             case 'CAN_EDIT':
                 // logic to determine if the user can EDIT
-                if(in_array('ROLE_ADMIN', $user->getRoles()) || $subject->getAuthor() === $user){
+                if($subject->getAuthor() === $user){
                     return true;
                 }
                 return false;
                 break;
             case 'CAN_DELETE':
-                if(in_array('ROLE_ADMIN', $user->getRoles()) || $subject->getAuthor() === $user){
+                if($subject->getAuthor() === $user){
                     return true;
                 }
                 return false;
                 break;
+            default:
+                return false;
         }
 
         return false;
