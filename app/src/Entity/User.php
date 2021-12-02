@@ -50,11 +50,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     private $accountMustBeVerifiedBefore;
 
-    private string $forgotPasswordToken;
-
-    private \DateTime $forgotPasswordTokenMustBeVerifiedBefore;
-
-    private \DateTime $ForgotPasswordTokenRequestedAt;
 
     public function __construct()
     {
@@ -255,51 +250,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAccountMustBeVerifiedBefore(\DateTimeInterface $accountMustBeVerifiedBefore): self
     {
         $this->accountMustBeVerifiedBefore = $accountMustBeVerifiedBefore;
-
-        return $this;
-    }
-
-    public function getForgotPasswordToken(): ?string
-    {
-        return $this->forgotPasswordToken;
-    }
-
-    public function setForgotPasswordToken(?string $forgotPasswordToken): self
-    {
-        $this->forgotPasswordToken = $forgotPasswordToken;
-
-        return $this;
-    }
-
-    public function getForgotPasswordTokenMustBeVerifiedBefore():  \DateTime
-    {
-        return $this->forgotPasswordTokenMustBeVerifiedBefore;
-    }
-
-    /**
-     * @param \DateTime $forgotPasswordTokenMustBeVerifiedBefore
-     */
-    public function setForgotPasswordTokenMustBeVerifiedBefore($forgotPasswordTokenMustBeVerifiedBefore): self
-    {
-        $this->forgotPasswordTokenMustBeVerifiedBefore = $forgotPasswordTokenMustBeVerifiedBefore;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getForgotPasswordTokenRequestedAt(): \DateTime
-    {
-        return $this->ForgotPasswordTokenRequestedAt;
-    }
-
-    /**
-     * @param \DateTime $ForgotPasswordTokenRequestedAt
-     */
-    public function setForgotPasswordTokenRequestedAt(\DateTime $ForgotPasswordTokenRequestedAt): self
-    {
-        $this->ForgotPasswordTokenRequestedAt = $ForgotPasswordTokenRequestedAt;
 
         return $this;
     }
