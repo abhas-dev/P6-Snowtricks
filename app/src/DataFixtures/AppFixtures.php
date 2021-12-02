@@ -40,8 +40,8 @@ class AppFixtures extends Fixture
         }
 
         // User
-        UserFactory::createOne(['email' => 'test@test.fr', 'password' => '12345678', 'username' => 'test', 'roles' => ['ROLE_ADMIN']]);
-        UserFactory::createOne(['email' => 'user@test.fr', 'password' => '12345678', 'username' => 'test1']);
+        UserFactory::createOne(['email' => 'test@test.fr', 'password' => '12345678', 'username' => 'test', 'roles' => ['ROLE_ADMIN'], 'isVerified' => 1]);
+        UserFactory::createOne(['email' => 'user@test.fr', 'password' => '12345678', 'username' => 'test1', 'isVerified' => 1]);
         UserFactory::createMany(10);
 
         // Video Providers

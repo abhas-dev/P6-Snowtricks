@@ -21,6 +21,8 @@ security:
             lazy: true # Allow to not authenticate until it needs to
             provider: app_user_provider # Lie ce pare-feu au provider
 #            custom_authenticator: App\Security\LoginFormAuthenticator
+            pattern: ^/
+            user_checker: App\Security\UserChecker
             entry_point: form_login
 
             login_throttling:

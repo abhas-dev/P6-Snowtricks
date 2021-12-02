@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class LoginType extends AbstractType
 {
@@ -21,7 +22,9 @@ class LoginType extends AbstractType
                     'class' => 'form-control',
                     'autofocus' => true
                 ],
-                'required' => false
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez renseigner un nom d\'utilisateur'])
+                ]
                 ])
             ->add('password', PasswordType::class, [
                 'label' => 'Mot de passe',
@@ -29,8 +32,8 @@ class LoginType extends AbstractType
                     'placeholder' => 'Mot de passe',
                     'class' => 'form-control'
                 ],
-                'required' => false,
                 'constraints' => [
+                    new NotBlank(['message' => 'Veuillez renseigner un mot de passe']),
                     new Length(['min' => 8, 'minMessage' => 'La longueur minimum du mot de passe est {{ min }} caracteres'])
                 ]
             ])
@@ -41,6 +44,7 @@ class LoginType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => null,
+            'attr' => ['novalidate' => true]
         ]);
     }
 }

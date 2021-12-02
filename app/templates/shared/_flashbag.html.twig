@@ -1,0 +1,12 @@
+{% for label, messages in app.flashes %}
+    <section class="container">
+        <div class="alert alert-{{ label }} alert-dismissible fade show text-center my-4">
+            {% for message in messages %}
+                <p class="text-center fw-bold">
+                    {{ message|raw }}
+                </p>
+            {% endfor %}
+            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </section>
+{% endfor %}

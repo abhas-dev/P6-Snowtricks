@@ -46,6 +46,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Trick::class)]
     private $tricks;
 
+    private $registrationToken;
+
+    private $accountMustBeVerifiedBefore;
+
+
     public function __construct()
     {
         $this->tricks = new ArrayCollection();
@@ -221,6 +226,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $trick->setAuthor(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRegistrationToken(): ?string
+    {
+        return $this->registrationToken;
+    }
+
+    public function setRegistrationToken(?string $registrationToken): self
+    {
+        $this->registrationToken = $registrationToken;
+
+        return $this;
+    }
+
+    public function getAccountMustBeVerifiedBefore(): \DateTimeInterface
+    {
+        return $this->accountMustBeVerifiedBefore;
+    }
+
+    public function setAccountMustBeVerifiedBefore(\DateTimeInterface $accountMustBeVerifiedBefore): self
+    {
+        $this->accountMustBeVerifiedBefore = $accountMustBeVerifiedBefore;
 
         return $this;
     }
