@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 
+use App\Factory\MessageFactory;
 use App\Factory\TrickCategoryFactory;
 use App\Factory\TrickFactory;
 use App\Factory\TrickImageFactory;
@@ -42,7 +43,7 @@ class AppFixtures extends Fixture
         // User
         UserFactory::createOne(['email' => 'test@test.fr', 'password' => '12345678', 'username' => 'test', 'roles' => ['ROLE_ADMIN'], 'isVerified' => 1]);
         UserFactory::createOne(['email' => 'user@test.fr', 'password' => '12345678', 'username' => 'test1', 'isVerified' => 1]);
-        UserFactory::createMany(10);
+        $users = UserFactory::createMany(10);
 
         // Video Providers
         foreach($this->getVideoProviders() as $provider)
@@ -63,9 +64,9 @@ class AppFixtures extends Fixture
             }
         }
 
-
-
-
+        // Messages
+        MessageFactory::createMany(400);
+// 'messages' => MessageFactory::randomRange(2, 5)
 
         $manager->flush();
     }

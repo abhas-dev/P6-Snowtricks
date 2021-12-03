@@ -50,10 +50,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     private $accountMustBeVerifiedBefore;
 
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Message::class)]
+    private $messages;
+
 
     public function __construct()
     {
         $this->tricks = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -250,6 +254,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setAccountMustBeVerifiedBefore(\DateTimeInterface $accountMustBeVerifiedBefore): self
     {
         $this->accountMustBeVerifiedBefore = $accountMustBeVerifiedBefore;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Message[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setAuthor($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): self
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getAuthor() === $this) {
+                $message->setAuthor(null);
+            }
+        }
 
         return $this;
     }
