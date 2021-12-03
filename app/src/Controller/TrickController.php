@@ -2,16 +2,20 @@
 
 namespace App\Controller;
 
+use App\Entity\Message;
 use App\Entity\Trick;
+use App\Form\MessageType;
 use App\Form\Model\EditTrickFormModel;
 use App\Form\Trick\EditTrickType;
 use App\Form\Trick\TrickType;
+use App\Repository\MessageRepository;
 use App\Service\ImageService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -21,12 +25,14 @@ class TrickController extends AbstractController
     private EntityManagerInterface $entityManager;
     private SluggerInterface $slugger;
     private ImageService $imageService;
+    private MessageRepository $messageRepository;
 
-    public function __construct(EntityManagerInterface $entityManager, SluggerInterface $slugger, ImageService $imageService)
+    public function __construct(EntityManagerInterface $entityManager, SluggerInterface $slugger, ImageService $imageService, MessageRepository $messageRepository)
     {
         $this->entityManager = $entityManager;
         $this->slugger = $slugger;
         $this->imageService = $imageService;
+        $this->messageRepository = $messageRepository;
     }
 
 //    #[Route('/{category_slug}/{slug}', name: 'trick_show')]
@@ -42,10 +48,38 @@ class TrickController extends AbstractController
 //        return $this->render('trick/show.html.twig', compact('trick'));
 //    }
 
-    #[Route('/{category_slug}/{slug}', name: 'trick_show', priority: -1)]
-    public function show(Trick $trick): Response
+    #[Route('/{category_slug}/{slug}', name: 'trick_show', methods: ['GET', 'POST'], priority: -1)]
+    public function show(Trick $trick, Request $request, MessageRepository $messageRepository): Response
     {
-        return $this->render('trick/show.html.twig', compact('trick'));
+        $message = new Message();
+        $form = $this->createForm(MessageType::class, $message);
+
+        $form->handleRequest($request);
+
+        $messagesPagination = $this->paginator($request, 10, $trick->getId());
+        [
+            $messages,
+            $totalPages,
+            $currentPage
+        ] = $messagesPagination;
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            if(!$this->getUser())
+            {
+                return $this->redirectToRoute('homepage');
+            }
+
+            $message->setCreatedAt(new \DateTime('now'));
+            $message->setTrick($trick);
+            $message->setAuthor($this->getUser());
+            $this->entityManager->persist($message);
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('trick_show', ['category_slug' => $trick->getTrickCategory()->getSlug(), 'slug' => $trick->getSlug()]);
+        }
+
+        return $this->renderForm('trick/show.html.twig', compact('trick', 'form', 'messages', 'totalPages', 'currentPage'));
     }
 
     #[Route('/trick/create', name: 'trick_create')]
@@ -173,5 +207,26 @@ class TrickController extends AbstractController
                 $trick->addTrickVideo($newTrickVideo);
             }
         }
+    }
+
+//    private function getPageNumber(Request $request): int
+//    {
+//        if( $request->query->get('page', 1))
+//        return (int)$request->query->get('page', 1);
+//    }
+
+    private function paginator(Request $request, int $limit, int $trickId): array
+    {
+        $totalPages = ceil($this->messageRepository->findTotalByTrick($trickId) / $limit);
+        $currentPage = $request->query->get('page', 1);
+        if(!is_int($currentPage) && $currentPage < 1 || $currentPage > $totalPages)
+        {
+            $currentPage = 1;
+        }
+
+        $offsetValue = ($currentPage - 1) * $limit;
+        $messages = $this->messageRepository->findBy(['trick' => $trickId], ['createdAt' => 'ASC'], $limit, $offsetValue);
+
+        return [$messages, $totalPages, $currentPage];
     }
 }

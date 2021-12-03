@@ -4,6 +4,9 @@
 
 {% block body %}
 
+    {% set currentPath = path(app.request.attributes.get('_route'),
+        app.request.attributes.get('_route_params')) %}
+
     <section class="container rounded border border-2 my-5 p-0">
         {% if trick.mainTrickImage is null %}
             <img src="{{ asset("uploads/snowboard-default.jpg") }}" class="card-img-top rounded-top" alt="Image d'un trick par defaut">
@@ -53,6 +56,66 @@
             <p><small>Crée le {{ trick.createdAt | date('d/m/Y H:i') }} Par: </small><strong>{{ trick.author.username }}</strong></p>
             <p class="mx-auto"><span class="badge bg-info">{{ trick.trickCategory.name }}</span></p>
             <p class="lead">{{ trick.description }}</p>
+        </div>
+    </section>
+
+    <section class="container">
+        {% if app.user %}
+            <div>
+                {{ form_start(form) }}
+                {{ form_row(form.content) }}
+                <button type="submit" class="btn btn-success">Envoyer</button>
+                {{ form_end(form) }}
+            </div>
+        {% endif %}
+
+{#        {% for message in trick.messages %}#}
+{#            <strong>Par: {{ message.author.username }}</strong>#}
+{#            <p><small>Le {{ trick.createdAt | date('d/m/Y H:i') }}</small></p>#}
+{#            <p>{{ message.content }}</p>#}
+{#        {% endfor %}#}
+        <h2>Espace discussion: </h2>
+        {% for message in messages %}
+            <div class="card-body p-4">
+                <div class="d-flex flex-start">
+                    <img
+                            class="rounded-circle shadow-1-strong me-3"
+                            src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+                            alt="avatar"
+                            width="60"
+                            height="60"
+                    />
+                    <div>
+                        <h6 class="fw-bold mb-1">{{ message.author.username }}</h6>
+                        <div class="d-flex align-items-center mb-3">
+                            <p class="mb-0">
+                                Le <small>{{ trick.createdAt | date('d/m/Y à H:i') }}</small>
+                            </p>
+                        </div>
+                        <p class="mb-0">
+                            {{ message.content }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-0"/>
+        {% endfor %}
+        <div class="my-5">
+{#            {{ app.request.query.get('page') }}#}
+            <ul class="pagination pagination-lg justify-content-center">
+                <li class="page-item {{ currentPage == 1 ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ path('trick_show', {'category_slug': trick.trickCategory.slug, 'slug': trick.slug}) }}?page={{ currentPage - 1 }}">&laquo;</a>
+                </li>
+                {% for pageNumber in 1..totalPages %}
+                    <li class="page-item {{ currentPage == pageNumber ? 'active' : ''}}">
+                        <a class="page-link" href="{{ path('trick_show', {'category_slug': trick.trickCategory.slug, 'slug': trick.slug}) }}?page={{ pageNumber }}">{{ pageNumber }}</a>
+                    </li>
+                {% endfor %}
+                <li class="page-item  {{ currentPage == totalPages ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ path('trick_show', {'category_slug': trick.trickCategory.slug, 'slug': trick.slug}) }}?page={{ currentPage + 1 }}">&raquo;</a>
+                </li>
+            </ul>
         </div>
     </section>
 {% endblock %}
