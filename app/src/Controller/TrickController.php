@@ -16,7 +16,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -28,7 +27,7 @@ class TrickController extends AbstractController
     private ImageService $imageService;
     private Paginator $paginator;
 
-    public function __construct(EntityManagerInterface $entityManager, SluggerInterface $slugger, ImageService $imageService, MessageRepository $messageRepository, Paginator $paginator)
+    public function __construct(EntityManagerInterface $entityManager, SluggerInterface $slugger, ImageService $imageService, Paginator $paginator)
     {
         $this->entityManager = $entityManager;
         $this->slugger = $slugger;
@@ -50,7 +49,7 @@ class TrickController extends AbstractController
 //    }
 
     #[Route('/{category_slug}/{slug}', name: 'trick_show', methods: ['GET', 'POST'], priority: -1)]
-    public function show(Trick $trick, Request $request, MessageRepository $messageRepository): Response
+    public function show(Trick $trick, Request $request): Response
     {
         $message = new Message();
         $form = $this->createForm(MessageType::class, $message);
@@ -176,15 +175,15 @@ class TrickController extends AbstractController
         ], 400);
     }
 
-    #[Route('/trick/{slug}/edit-tab', name: 'trick_edit-tab')]
-    public function changeDivContent(string $slug, Request $request): Response
-    {
-        $data = json_decode($request->getContent(), true);
-        dd($data);
-        return $this->json([
-
-        ]);
-    }
+//    #[Route('/trick/{slug}/edit-tab', name: 'trick_edit-tab')]
+//    public function changeDivContent(string $slug, Request $request): Response
+//    {
+//        $data = json_decode($request->getContent(), true);
+//        dd($data);
+//        return $this->json([
+//
+//        ]);
+//    }
 
     private function updateTrickFromDto(Trick $trick, EditTrickFormModel $trickModel, FormInterface $form){
         $trick->setName($trickModel->name);
@@ -209,25 +208,4 @@ class TrickController extends AbstractController
             }
         }
     }
-
-//    private function getPageNumber(Request $request): int
-//    {
-//        if( $request->query->get('page', 1))
-//        return (int)$request->query->get('page', 1);
-//    }
-
-//    private function paginator(int $limit, int $trickId): array
-//    {
-//        $totalPages = ceil($this->messageRepository->findTotalByTrick($trickId) / $limit);
-//        $currentPage = $request->query->get('page', 1);
-//        if(!is_int($currentPage) && $currentPage < 1 || $currentPage > $totalPages)
-//        {
-//            $currentPage = 1;
-//        }
-//
-//        $offsetValue = ($currentPage - 1) * $limit;
-//        $messages = $this->messageRepository->findBy(['trick' => $trickId], ['createdAt' => 'ASC'], $limit, $offsetValue);
-//
-//        return [$messages, $totalPages, $currentPage];
-//    }
 }

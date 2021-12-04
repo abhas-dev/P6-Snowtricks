@@ -10,7 +10,10 @@
             <ul class="navbar-nav ms-auto d-flex align-items-center">
                 {% if app.user %}
                     <li class="nav-item"><a href="{{ path('trick_create') }}" class="nav-link">Creer un trick</a></li>
-                    <li class="nav-item"><a href="#" class="nav-link">Mon Profil</a></li>
+                    {% if app.user.tricks.count > 0 %}
+                        <li class="nav-item"><a href="{{ path('trick_create') }}" class="nav-link">Mes tricks</a></li>
+                    {% endif %}
+                    <li class="nav-item"><a href="{{ path('profile_edit') }}" class="nav-link">Mon Profil</a></li>
                     <li class="nav-item"><a href="{{ path('security_logout') }}" class="btn btn-danger">Logout</a></li>
                 {% else %}
                     <li class="nav-item"><a href="{{ path('security_register') }}" class="nav-link">Inscription</a></li>

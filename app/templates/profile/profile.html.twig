@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil - {{ parent() }}{% endblock %}
+
+{% block body %}
+    <section class="container my-5">
+        <h1>Mon profil</h1>
+        <div class="row my-5">
+            <div class="col-6">
+                {{ form_start(editAccountGeneralInformationForm) }}
+                {{ form_row(editAccountGeneralInformationForm.email) }}
+                {{ form_row(editAccountGeneralInformationForm.fullname) }}
+                <button type="submit" class="btn btn-success mt-3">Confirmer la modification</button>
+                {{ form_end(editAccountGeneralInformationForm) }}
+            </div>
+        </div>
+
+        <div class="row my-5">
+            <div class="col-6">
+                {{ form_start(editAccountPasswordForm) }}
+                    {{ form_row(editAccountPasswordForm.oldPassword) }}
+                    {{ form_row(editAccountPasswordForm.plainPassword) }}
+                <input type="hidden" name="token" value="{{ csrf_token('change_password') }}"/>
+                <button type="submit" class="btn btn-info mt-3">Confirmer la modification</button>
+                {{ form_end(editAccountGeneralInformationForm) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}
