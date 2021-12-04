@@ -10,6 +10,7 @@ use App\Form\Trick\EditTrickType;
 use App\Form\Trick\TrickType;
 use App\Repository\MessageRepository;
 use App\Service\ImageService;
+use App\Service\Paginator;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,14 +26,14 @@ class TrickController extends AbstractController
     private EntityManagerInterface $entityManager;
     private SluggerInterface $slugger;
     private ImageService $imageService;
-    private MessageRepository $messageRepository;
+    private Paginator $paginator;
 
-    public function __construct(EntityManagerInterface $entityManager, SluggerInterface $slugger, ImageService $imageService, MessageRepository $messageRepository)
+    public function __construct(EntityManagerInterface $entityManager, SluggerInterface $slugger, ImageService $imageService, MessageRepository $messageRepository, Paginator $paginator)
     {
         $this->entityManager = $entityManager;
         $this->slugger = $slugger;
         $this->imageService = $imageService;
-        $this->messageRepository = $messageRepository;
+        $this->paginator = $paginator;
     }
 
 //    #[Route('/{category_slug}/{slug}', name: 'trick_show')]
@@ -56,7 +57,7 @@ class TrickController extends AbstractController
 
         $form->handleRequest($request);
 
-        $messagesPagination = $this->paginator($request, 10, $trick->getId());
+        $messagesPagination = $this->paginator->paginate(10, $trick->getId());
         [
             $messages,
             $totalPages,
@@ -215,18 +216,18 @@ class TrickController extends AbstractController
 //        return (int)$request->query->get('page', 1);
 //    }
 
-    private function paginator(Request $request, int $limit, int $trickId): array
-    {
-        $totalPages = ceil($this->messageRepository->findTotalByTrick($trickId) / $limit);
-        $currentPage = $request->query->get('page', 1);
-        if(!is_int($currentPage) && $currentPage < 1 || $currentPage > $totalPages)
-        {
-            $currentPage = 1;
-        }
-
-        $offsetValue = ($currentPage - 1) * $limit;
-        $messages = $this->messageRepository->findBy(['trick' => $trickId], ['createdAt' => 'ASC'], $limit, $offsetValue);
-
-        return [$messages, $totalPages, $currentPage];
-    }
+//    private function paginator(int $limit, int $trickId): array
+//    {
+//        $totalPages = ceil($this->messageRepository->findTotalByTrick($trickId) / $limit);
+//        $currentPage = $request->query->get('page', 1);
+//        if(!is_int($currentPage) && $currentPage < 1 || $currentPage > $totalPages)
+//        {
+//            $currentPage = 1;
+//        }
+//
+//        $offsetValue = ($currentPage - 1) * $limit;
+//        $messages = $this->messageRepository->findBy(['trick' => $trickId], ['createdAt' => 'ASC'], $limit, $offsetValue);
+//
+//        return [$messages, $totalPages, $currentPage];
+//    }
 }
