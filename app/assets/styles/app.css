@@ -1,7 +1,6 @@
 @import 'bootswatch.css';
 @import '~font-awesome';
 
-
 .hero{
     background: url('../img/hero.jpg') center center; /*fixed*/
     -webkit-background-size: cover;

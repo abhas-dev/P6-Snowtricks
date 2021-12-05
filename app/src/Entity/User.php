@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -31,7 +32,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $username;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: 'string', length: 255)]
     private $fullname;
 
     #[ORM\Column(type: 'boolean')]
@@ -52,6 +53,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Message::class)]
     private $messages;
+
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $avatarFilename;
 
 
     public function __construct()
@@ -287,4 +291,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatarFilename(): mixed
+    {
+        return $this->avatarFilename;
+    }
+
+    /**
+     * @param mixed $avatarFilename
+     * @return User
+     */
+    public function setAvatarFilename(string $avatarFilename): self
+    {
+        $this->avatarFilename = $avatarFilename;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAvatarsPath(): string
+    {
+        return 'uploads/avatars/'.$this->getAvatarFilename();
+    }
+
+
 }

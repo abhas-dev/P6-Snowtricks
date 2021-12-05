@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     trickImages_directory: '%kernel.project_dir%/public/uploads/tricks'
+    avatars_directory: '%kernel.project_dir%/public/uploads/avatars'
     app.sender_email: '%env(MAILER_SENDER_EMAIL)%'
     app.sender_name: '%env(MAILER_SENDER_NAME)%'
 
@@ -28,7 +29,8 @@ services:
     # please note that last definitions always *replace* previous ones
     App\Service\ImageService:
         arguments:
-            $targetDirectory: '%trickImages_directory%'
+            $targetTrickImageDirectory: '%trickImages_directory%'
+            $targetAvatarDirectory: '%avatars_directory%'
     App\Service\EmailSender:
         arguments:
             $senderEmail: '%app.sender_email%'

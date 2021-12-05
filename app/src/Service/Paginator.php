@@ -26,7 +26,7 @@ class Paginator
         }
 
         $offsetValue = ($currentPage - 1) * $limit;
-        $messages = $this->messageRepository->findBy(['trick' => $trickId], ['createdAt' => 'ASC'], $limit, $offsetValue);
+        $messages = $this->messageRepository->findBy(['trick' => $trickId], ['createdAt' => 'DESC'], $limit, $offsetValue);
 
         return [$messages, $totalPages, $currentPage];
     }

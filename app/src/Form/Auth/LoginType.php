@@ -44,7 +44,7 @@ class LoginType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => null,
-            'attr' => ['novalidate' => true]
+//            'attr' => ['novalidate' => true]
         ]);
     }
 }

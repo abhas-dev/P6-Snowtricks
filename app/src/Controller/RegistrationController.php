@@ -53,6 +53,7 @@ class RegistrationController extends AbstractController
                 )
             );
             $user->setIsVerified(false);
+            $user->setAvatarFilename('avatar-default.png');
             $user->setCreatedAt(new \DateTime('now'));
 
             if($form['agreeTerms']->getData()){

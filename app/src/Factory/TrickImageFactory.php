@@ -72,7 +72,7 @@ final class TrickImageFactory extends ModelFactory
         return $this
              ->afterInstantiate(function(TrickImage $trickImage) {
                  if(!$trickImage->getFilename()){
-                     $this->imageService->moveImageToFinalDirectory($trickImage);
+                     $this->imageService->moveTrickImageToFinalDirectory($trickImage);
                  }
              })
         ;

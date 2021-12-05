@@ -2,7 +2,7 @@ const axios = require("axios");
 
 // Change div content
 function showOutput(res){
-    document.querySelector('#js-content').innerHTML = ``
+    document.querySelector('#js-content').innerHTML = ``;
 }
 
 let links = document.querySelectorAll('[data-delete]');
@@ -27,12 +27,12 @@ function onClickDeleteBtn(e) {
             })
             .catch(error => {
                 console.log(error);
-            })
+            });
     }
 }
 
 links.forEach(link => {
-    link.addEventListener('click', onClickDeleteBtn)
+    link.addEventListener('click', onClickDeleteBtn);
 });
 
 
