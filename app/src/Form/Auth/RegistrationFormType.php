@@ -2,7 +2,6 @@
 
 namespace App\Form\Auth;
 
-
 use App\Entity\User;
 use App\Form\FormExtension\RepeatedPasswordType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -87,7 +86,7 @@ class RegistrationFormType extends AbstractType
             'csrf_protection' => false,
             'constraints' => [
             new UniqueEntity(['fields' => ['email'], 'message' => 'La valeur {{ value }} a deja été enregistrée']),
-            new UniqueEntity('username','La valeur {{ value }} a deja été enregistrée')
+            new UniqueEntity('username', 'La valeur {{ value }} a deja été enregistrée')
             ],
             'attr' => ['novalidate' => true]
         ]);

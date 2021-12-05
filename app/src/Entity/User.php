@@ -11,7 +11,6 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -317,6 +316,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return 'uploads/avatars/'.$this->getAvatarFilename();
     }
-
-
 }
