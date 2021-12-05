@@ -32,21 +32,6 @@ class MessageRepository extends ServiceEntityRepository
         return $query->getSingleScalarResult();
     }
 
-//    public function findTotalByTrick(int $id)
-//    {
-////        $query =  $this->manager->createQuery("SELECT count(message.id) FROM App\Entity\Message as message WHERE message.trick= :id");
-////        $query->setParameter('id', $id);
-//        $dql = $this->manager->createQuery("SELECT (*) FROM App\Entity\Message as message WHERE message.trick=:id LIMIT 10 OFFSET 10");
-//        $dql->setParameter('id', $id);
-//
-//        return $dql->getResult();
-//    }
-
-//    public function findAllOrdered()
-//    {
-//        $dql = 'SELECT message FROM '
-//    }
-
     // /**
     //  * @return Message[] Returns an array of Message objects
     //  */

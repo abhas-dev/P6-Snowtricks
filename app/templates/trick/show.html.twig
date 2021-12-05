@@ -74,13 +74,15 @@
 {#            <p><small>Le {{ trick.createdAt | date('d/m/Y H:i') }}</small></p>#}
 {#            <p>{{ message.content }}</p>#}
 {#        {% endfor %}#}
+        <div class="mt-5">
         <h2>Espace discussion: </h2>
         {% for message in messages %}
             <div class="card-body p-4">
                 <div class="d-flex flex-start">
                     <img
                             class="rounded-circle shadow-1-strong me-3"
-                            src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"
+{#                            src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"#}
+                            src="{{ asset(message.author.avatarsPath) }}"
                             alt="avatar"
                             width="60"
                             height="60"
@@ -98,6 +100,7 @@
                     </div>
                 </div>
             </div>
+        </div>
 
             <hr class="my-0"/>
         {% endfor %}

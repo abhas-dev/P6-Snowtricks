@@ -3,10 +3,10 @@
 namespace App\Form\Profile;
 
 use App\Entity\User;
-use App\Form\FormExtension\RepeatedPasswordType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -33,6 +33,10 @@ class EditProfileType extends AbstractType
             ->add('fullname', TextType::class, [
                 'label' => 'Nom Complet',
                 'attr' => ['placeholder' => 'Nom Prenom...'],
+            ])
+            ->add('avatar', FileType::class, [
+                'label' => 'Avatar',
+                'mapped' => false
             ])
         ;
     }

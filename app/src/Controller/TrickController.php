@@ -96,7 +96,7 @@ class TrickController extends AbstractController
 
             foreach($trickImages as $trickImage)
             {
-                $this->imageService->moveImageToFinalDirectory($trickImage);
+                $this->imageService->moveTrickImageToFinalDirectory($trickImage);
             }
 
             if($trickImages) $trick->setMainTrickImage($trickImages[0]);
@@ -157,7 +157,7 @@ class TrickController extends AbstractController
         {
             foreach($trick->getTrickImages() as $trickImage)
             {
-                $this->imageService->removeUploadedImage($trickImage);
+                $this->imageService->removeUploadedTrickImage($trickImage);
             }
             $this->entityManager->remove($trick);
             $this->entityManager->flush();
@@ -196,7 +196,7 @@ class TrickController extends AbstractController
         {
             if($newTrickImage && !$newTrickImage->getId()){
                 $trick->addTrickImage($newTrickImage);
-                $this->imageService->moveImageToFinalDirectory($newTrickImage);
+                $this->imageService->moveTrickImageToFinalDirectory($newTrickImage);
             }
         }
 

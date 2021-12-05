@@ -55,6 +55,17 @@ class RegistrationFormType extends AbstractType
                     ])
                 ]
             ])
+            ->add('fullname', TextType::class, [
+                'label' => "Nom complet",
+                'attr' => [
+                    'placeholder' => "John Doe"
+                ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => "Veuillez saisir un nom",
+                    ])
+                ]
+            ])
             ->add('plainPassword', RepeatedPasswordType::class)
 
             ->add('agreeTerms', CheckboxType::class, [

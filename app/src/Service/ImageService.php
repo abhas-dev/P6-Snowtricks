@@ -20,15 +20,17 @@ class ImageService
     private SluggerInterface $slugger;
     private Filesystem $filesystem;
     private string $imageNewName;
-    private $targetDirectory;
+    private $targetTrickImageDirectory;
+    private $targetAvatarDirectory;
 
-    public function __construct($targetDirectory, LoggerInterface $logger, ParameterBagInterface $params, SluggerInterface $slugger, Filesystem $filesystem)
+    public function __construct($targetTrickImageDirectory, $targetAvatarDirectory, LoggerInterface $logger, ParameterBagInterface $params, SluggerInterface $slugger, Filesystem $filesystem)
     {
         $this->logger = $logger;
         $this->params = $params;
         $this->slugger = $slugger;
         $this->filesystem = $filesystem;
-        $this->targetDirectory = $targetDirectory;
+        $this->targetTrickImageDirectory = $targetTrickImageDirectory;
+        $this->targetAvatarDirectory = $targetAvatarDirectory;
     }
 
 //    public function moveImageToFinalDirectory(UploadedFile $file)
@@ -46,14 +48,14 @@ class ImageService
 //        }
 //    }
 
-    public function moveImageToFinalDirectory(TrickImage $trickImage): string
+    public function moveTrickImageToFinalDirectory(TrickImage $trickImage): string
     {
         $file = $trickImage->getFile();
         $newFilename = $this->generateNewFileName($file);
         $trickImage->setFilename($newFilename);
         try {
             $file->move(
-                $this->getTargetDirectory(),
+                $this->getTargetTrickImageDirectory(),
                 $newFilename
             );
             return $newFilename;
@@ -62,6 +64,36 @@ class ImageService
             $this->logger->error('failed to upload image: ' . $e->getMessage());
             throw new FileException('Il y a eu un probleme lors de l\'envoi d\'un fichier');
         }
+    }
+
+    public function removeUploadedTrickImage(TrickImage $trickImage): void
+    {
+        try {
+            $fileLocation = $trickImage->getPath();
+
+            if($this->filesystem->exists($fileLocation))
+            {
+                unlink($fileLocation);
+            }
+        } catch (FileException $exception){
+            $this->logger->error('failed to remove image: ' . $exception->getMessage());
+            throw new FileException('Il y a eu un probleme lors de la suppression du fichier');
+        }
+    }
+
+    public function uploadAvatar(UploadedFile $uploadedFile): string
+    {
+        $newFilename = $this->generateNewFileName($uploadedFile);
+        try {
+            $uploadedFile->move(
+                $this->getTargetAvatarDirectory(),
+                $newFilename
+            );
+            return $newFilename;
+        } catch (FileException $e) {
+            return throw new FileException('Il y a eu un probleme lors de l\'envoi d\'un fichier');
+        }
+
     }
 
     private function generateNewFileName(File $file): string
@@ -84,24 +116,13 @@ class ImageService
         return $this->imageNewName;
     }
 
-    public function removeUploadedImage(TrickImage $trickImage): void
+    public function getTargetTrickImageDirectory()
     {
-        try {
-            $fileLocation = $trickImage->getPath();
-
-            if($this->filesystem->exists($fileLocation))
-            {
-                unlink($fileLocation);
-            }
-        } catch (FileException $exception){
-            $this->logger->error('failed to remove image: ' . $exception->getMessage());
-            throw new FileException('Il y a eu un probleme lors de la suppression du fichier');
-        }
+        return $this->targetTrickImageDirectory;
     }
-
-    public function getTargetDirectory()
+    public function getTargetAvatarDirectory()
     {
-        return $this->targetDirectory;
+        return $this->targetAvatarDirectory;
     }
 //
 //    public function getPublicPath(string $path): string

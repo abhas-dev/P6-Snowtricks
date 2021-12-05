@@ -46,7 +46,8 @@ final class UserFactory extends ModelFactory
             'username' => self::faker()->userName(),
             'isVerified' => self::faker()->boolean(),
             'createdAt' => self::faker()->dateTimeBetween('-3 month', 'now'),
-            'fullname' => self::faker()->firstName()
+            'fullname' => self::faker()->firstName(),
+            'avatarFilename' => "avatar-default.png"
         ];
     }
 
