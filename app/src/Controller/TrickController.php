@@ -4,11 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Message;
 use App\Entity\Trick;
+use App\Entity\User;
 use App\Form\MessageType;
 use App\Form\Model\EditTrickFormModel;
 use App\Form\Trick\EditTrickType;
 use App\Form\Trick\TrickType;
-use App\Repository\MessageRepository;
 use App\Service\ImageService;
 use App\Service\Paginator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -65,14 +65,17 @@ class TrickController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid())
         {
-            if(!$this->getUser())
+            if(!$this->getUser() || !($this->getUser() instanceof User))
             {
                 return $this->redirectToRoute('homepage');
             }
 
+            /** @var User $user */
+            $user = $this->getUser();
+
             $message->setCreatedAt(new \DateTime('now'));
             $message->setTrick($trick);
-            $message->setAuthor($this->getUser());
+            $message->setAuthor($user);
             $this->entityManager->persist($message);
             $this->entityManager->flush();
 
@@ -115,11 +118,11 @@ class TrickController extends AbstractController
 
 
     #[Route('/trick/{slug}/edit', name: 'trick_edit')]
-    public function edit(Trick $trick, Request $request)
+    public function edit(Trick $trick, Request $request): Response
     {
-        if(!$trick){
-            throw $this->createNotFoundException("Ce trick n'existe pas");
-        }
+//        if(!$trick){
+//            throw $this->createNotFoundException("Ce trick n'existe pas");
+//        }
 
         $this->denyAccessUnlessGranted('CAN_EDIT', $trick, "Vous n'avez pas le droit d'acceder à ce trick");
 
@@ -143,11 +146,8 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/{slug}/delete', name: 'trick_delete', methods: ['DELETE'])]
-    public function delete(Request $request, Trick $trick)
+    public function delete(Request $request, Trick $trick): Response
     {
-        if(!$trick){
-            throw $this->createNotFoundException("Ce trick n'existe pas");
-        }
 
         $this->denyAccessUnlessGranted('CAN_DELETE', $trick, "Vous n'avez pas le droit d'acceder à ce trick");
 
@@ -165,7 +165,7 @@ class TrickController extends AbstractController
             return $this->json([
                 'code' => 200,
                 'message' => 'success'
-            ], 200);
+            ]);
             //        return $this->redirectToRoute('homepage', [], Response::HTTP_SEE_OTHER);
         }
 
