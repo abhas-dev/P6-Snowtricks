@@ -1,32 +1,34 @@
 const axios = require("axios");
 
 const loadMoreBtn = document.querySelector('#js-loadMore_tricks');
+const tricksBlock = document.querySelector('#tricks');
+const loadMoreSection = document.querySelector('#loadMoreSection');
+let nextPage = 2;
 
 async function  getMoreTricks(e){
     e.preventDefault();
     const url = this.getAttribute('href');
+    loadMoreBtn.textContent = 'Chargement...';
     await axios({
         method: 'post',
-        url: url,
+        url: `${url}?page=${nextPage}`,
         headers: {
             "X-Requested-With": "XMLHttpRequest",
             "Content-Type": "application/json"
         },
-        data: {lastTrick: this.dataset.lastTrick}
+        data: {
+            lastTrick: this.dataset.lastTrick
+        }
     })
-        .then(response => {
-            console.log(response);
+        .then(response => response.data)
+        .then(data => {
+            tricksBlock.insertAdjacentHTML('beforeend', data._template.content);
+            nextPage = data.nextPage;
+            !data.nextPage ? loadMoreSection.innerHTML = "Il n'y a pas d'autre trick" : loadMoreBtn.textContent = 'Charger Plus';
         })
         .catch(e => {
             console.log(e);
-        })
-    // axios.post(url, {
-    //     headers: { "X-Requested-With": "XMLHttpRequest" },
-    //     // On recupere le token dans le dataset l'attribut token
-    //     // On recupere l'index
-    //     data: { lastTrick: this.dataset.lastTrick },
-    // // })
-
+        });
 }
 
 loadMoreBtn.addEventListener('click', getMoreTricks);

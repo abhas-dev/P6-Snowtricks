@@ -34,18 +34,17 @@ class Paginator
         return [$messages, $totalPages, $currentPage];
     }
 
-    public function loadMoreTricks(int $lastTrick = 0, int $limit = 10): array
+    public function loadMoreTricks(int $currentPage = 1, int $limit = 10): array|null
     {
-        $totalPages = ceil($this->trickRepository->findTotal() / $limit);
-        $currentPage = $this->requestStack->getCurrentRequest()->query->get('page', 1);
+        $request = $this->requestStack->getCurrentRequest();
+        $totalPages = ceil($this->trickRepository->getCountTricks() / $limit);
+
+        $offset = ($currentPage - 1) * $limit;
         if(!is_int($currentPage) && $currentPage < 1 || $currentPage > $totalPages)
         {
-            $currentPage = 1;
+            return null;
         }
-
-//        $offsetValue = ($currentPage - 1) * $limit;
-        $offsetValue = $lastTrick;
-        $tricks = $this->trickRepository->findBy([], ['createdAt' => 'DESC'], $limit, $offsetValue);
+        $tricks = $this->trickRepository->findBy([], ['createdAt' => 'ASC'], $limit, $offset);
 
         return [$tricks, $totalPages, $currentPage];
     }

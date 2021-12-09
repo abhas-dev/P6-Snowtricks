@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Repository\TrickRepository;
 use App\Service\Paginator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +24,41 @@ class HomeController extends AbstractController
         $this->paginator = $paginator;
     }
 
+//    #[Route('/{offset?}', name: 'homepage')]
+//    public function index(): Response
+//    {
+//        $request = $this->requestStack->getCurrentRequest();
+//        // check whether request is called directly via route or via Twig template
+//        $isMainRequest = $this->requestStack->getMainRequest() === $request;
+//        $tricks = $this->trickRepository->findBy([], ['createdAt' => 'ASC'], 10, 0);
+//
+////        $request->isXmlHttpRequest() || !$isMainRequest ? $template = 'trick/_list.html.twig' : $template = 'home/index.html.twig';
+//        $offsetValue = 1;
+//        $paginatedTricks = $this->paginator->loadMoreTricks($offset = $offsetValue);
+//        [
+//            $tricks,
+//            $totalPages,
+//            $currentPage
+//        ] = $paginatedTricks;
+//
+//        if($request->isXmlHttpRequest() || !$isMainRequest)
+//        {
+//            $template = 'trick/_list.html.twig';
+//            $offsetValue = $request->attributes->get('offset');
+//
+//            $response = $this->render($template, compact('tricks', 'totalPages', 'currentPage'));
+//            return $this->json($response);
+//
+//            return $this->json([
+//                '_template' => $this->renderView()
+//            ])
+//        }
+//
+//        $template = 'home/index.html.twig';
+//
+//        return $this->render($template, compact('tricks', 'totalPages', 'currentPage'));
+//    }
+
     #[Route('/{offset?}', name: 'homepage')]
     public function index(): Response
     {
@@ -37,10 +73,21 @@ class HomeController extends AbstractController
         {
             $data = json_decode($request->getContent(), true);
 
+//            return $this->json([
+//                'tricks' => $this->trickRepository->getArrayTricks($offset = $request->attributes->get('offset')),
+//                'totalTricks' => $this->trickRepository->getCountTricks()
+//            ]);
+        $paginatedTricks = $this->paginator->loadMoreTricks($currentPage = $request->query->get('page'));
+        [
+            $tricks,
+            $totalPages,
+            $currentPage
+        ] = $paginatedTricks;
+
             return $this->json([
-                'tricks' => $this->trickRepository->getArrayTricks($offset = $request->attributes->get('offset')),
-                'totalTricks' => $this->trickRepository->getCountTricks()
-            ]);
+                '_template' => $this->render('trick/_list.html.twig', compact('tricks', 'totalPages', 'currentPage')),
+                'nextPage' => $currentPage + 1 <= $totalPages ? $currentPage + 1 : false
+            ], Response::HTTP_OK);
         }
 
         return $this->render('home/index.html.twig', compact('tricks'));
