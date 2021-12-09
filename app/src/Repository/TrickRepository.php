@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Repository;
 
@@ -45,5 +45,4 @@ class TrickRepository extends ServiceEntityRepository
 
         return $queryBuilder->getQuery()->getResult();
     }
-
 }
