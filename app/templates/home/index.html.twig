@@ -4,18 +4,18 @@
 
 {% block body %}
     <section class="hero">
-{#        <div class="px-4 py-5 text-center">#}
-{#            <h1 class="display-5 fw-bold">Centered hero</h1>#}
-{#        </div>#}
     </section>
     <section class="container py-5">
-        <div class="row g-4 d-sm-flex">
-{#            <div class="d-flex flex-row flex-wrap">#}
+        <div id="tricks" class="row g-4 d-sm-flex">
             {% for trick in tricks %}
                 <div class="col-12 col-md-6 col-lg-3 pt-5">
                         {% include "trick/_trick_card.html.twig" %}
                 </div>
             {% endfor %}
+        </div>
+
+        <div id="loadMoreSection" class="my-5 d-flex justify-content-center align-items-center">
+            <a href="{{ path('homepage') }}" id="js-loadMore_tricks" class="btn btn-primary"><i class="fa fa-spinner"></i> Charger Plus</a>
         </div>
     </section>
 {% endblock %}
@@ -23,4 +23,5 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('removeTrick') }}
+    {{ encore_entry_script_tags('loadmore') }}
 {% endblock %}

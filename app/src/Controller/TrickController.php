@@ -102,6 +102,7 @@ class TrickController extends AbstractController
             if($trickImages) $trick->setMainTrickImage($trickImages[0]);
             $trick->setSlug(strtolower($this->slugger->slug($trick->getName())));
             $trick->setCreatedAt(new \DateTime('now'));
+            $trick->setAuthor($this->getUser());
             $this->entityManager->persist($trick);
             $this->entityManager->flush();
 

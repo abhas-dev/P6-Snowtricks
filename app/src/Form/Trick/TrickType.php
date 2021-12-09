@@ -41,23 +41,6 @@ class TrickType extends AbstractType
                 'required' => false
 
             ])
-//            ->add('trickImages', FileType::class, [
-//                'label' => 'Image',
-//                'mapped' => false,
-//                'multiple' => true,
-//                'required' => false,
-////                'constraints' => [
-////                    new File([
-////                        'mimeTypes' => [
-////                            'image/jpeg',
-////                            'image/jpg',
-////                            'image/png'
-////                        ],
-////                        'mimeTypesMessage' => 'Veuillez entrer un fichier valide',
-////                    ])
-////                ]
-//
-//            ])
             ->add('trickImages', CollectionType::class, [
                 'label' => false,
                 'entry_options' => ['label' => false],

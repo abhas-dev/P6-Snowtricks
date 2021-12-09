@@ -25,16 +25,17 @@ class TrickImage
 
     /** @var UploadedFile */
     #[Assert\Image(
-        maxSize: 1024,
+        maxSize: 1024000,
         minWidth: 200,
-        maxWidth: 400,
+        maxWidth: 1920,
         minHeight: 200,
-        maxHeight: 400,
+        maxHeight: 1920,
         mimeTypes: ['image/jpeg', 'image/jpg', 'image/png'],
         mimeTypesMessage: 'Veuillez entrer un fichier valide',
         allowPortrait: false,
         allowPortraitMessage: "L'image doit etre au format paysage"
     )]
+    #[Assert\NotBlank(message: 'Veuillez saisir une image ou supprimer le champ')]
     private $file;
 
     #[ORM\Column(type: 'string', length: 255)]

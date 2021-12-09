@@ -39,7 +39,7 @@ class TrickImageController extends AbstractController
         }
         if($this->isCsrfTokenValid('delete-image', $data['_token']))
         {
-            $this->imageService->removeUploadedImage($trickImage);
+            $this->imageService->removeUploadedTrickImage($trickImage);
             $this->entityManager->remove($trickImage);
             $this->entityManager->flush();
 

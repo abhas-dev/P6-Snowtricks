@@ -28,20 +28,20 @@ class TrickImageType extends AbstractType
             ->add('file', FileType::class, [
                 'label' => false,
                 'required' =>false,
-                'constraints' => [
-                    new Image([
-                        'maxSize' => 1024000,
-                        'mimeTypes' => [
-                            'image/jpeg',
-                            'image/jpg',
-                            'image/png'
-                        ],
-                        'mimeTypesMessage' => 'Veuillez entrer un fichier valide',
-                        'allowPortrait' => false,
-                        'allowPortraitMessage' => "L'image doit etre au format paysage"
-                    ]),
-                    new NotBlank(['message' => 'Veuillez saisir une image ou supprimer le champ'])
-                ]
+//                'constraints' => [
+//                    new Image([
+//                        'maxSize' => 1024000,
+//                        'mimeTypes' => [
+//                            'image/jpeg',
+//                            'image/jpg',
+//                            'image/png'
+//                        ],
+//                        'mimeTypesMessage' => 'Veuillez entrer un fichier valide',
+//                        'allowPortrait' => false,
+//                        'allowPortraitMessage' => "L'image doit etre au format paysage"
+//                    ]),
+//                    new NotBlank(['message' => 'Veuillez saisir une image ou supprimer le champ'])
+//                ]
             ])
         ;
     }
