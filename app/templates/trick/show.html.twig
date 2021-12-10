@@ -60,6 +60,8 @@
     </section>
 
     <section class="container">
+        <h2>Espace discussion: </h2>
+
         {% if app.user %}
             <div>
                 {{ form_start(form) }}
@@ -69,19 +71,15 @@
             </div>
         {% endif %}
 
-{#        {% for message in trick.messages %}#}
-{#            <strong>Par: {{ message.author.username }}</strong>#}
-{#            <p><small>Le {{ trick.createdAt | date('d/m/Y H:i') }}</small></p>#}
-{#            <p>{{ message.content }}</p>#}
-{#        {% endfor %}#}
+
         <div class="mt-5">
-        <h2>Espace discussion: </h2>
+
+        {% if messages|length > 0 %}
         {% for message in messages %}
             <div class="card-body p-4">
                 <div class="d-flex flex-start">
                     <img
                             class="rounded-circle shadow-1-strong me-3"
-{#                            src="https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png"#}
                             src="{{ asset(message.author.avatarsPath) }}"
                             alt="avatar"
                             width="60"
@@ -102,10 +100,10 @@
             </div>
         </div>
 
-            <hr class="my-0"/>
+        <hr class="my-0"/>
         {% endfor %}
         <div class="my-5">
-{#            {{ app.request.query.get('page') }}#}
+            {#            {{ app.request.query.get('page') }}#}
             <ul class="pagination pagination-lg justify-content-center">
                 <li class="page-item {{ currentPage == 1 ? 'disabled' : '' }}">
                     <a class="page-link" href="{{ path('trick_show', {'category_slug': trick.trickCategory.slug, 'slug': trick.slug}) }}?page={{ currentPage - 1 }}">&laquo;</a>
@@ -120,5 +118,8 @@
                 </li>
             </ul>
         </div>
+        {% else %}
+        <p>Pas de messages à afficher...</p>
+        {% endif %}
     </section>
 {% endblock %}

@@ -24,7 +24,7 @@ class TrickVideo
         message: "Ce lien n'est pas valide",
         match: true
     )]
-    #[Assert\NotBlank(message: 'Veuillez saisir un lien valide')]
+    #[Assert\NotBlank(message: 'Veuillez saisir un lien youtube valide')]
     private $url;
 
     #[ORM\ManyToOne(targetEntity: VideoProvider::class, inversedBy: 'trickVideos')]
