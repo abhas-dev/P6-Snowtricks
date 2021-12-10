@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\TrickVideoRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: TrickVideoRepository::class)]
 class TrickVideo
@@ -17,10 +19,16 @@ class TrickVideo
     private $name;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Regex(
+        pattern: "/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^'&?\/\s]{11})/",
+        message: "Ce lien n'est pas valide",
+        match: true
+    )]
+    #[Assert\NotBlank(message: 'Veuillez saisir un lien valide')]
     private $url;
 
     #[ORM\ManyToOne(targetEntity: VideoProvider::class, inversedBy: 'trickVideos')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private $provider;
 
     #[ORM\ManyToOne(targetEntity: Trick::class, inversedBy: 'trickVideos')]
@@ -50,7 +58,7 @@ class TrickVideo
 
     public function setUrl(string $url): self
     {
-        $this->url = $url;
+        $this->url = $this->convertLinkToEmbed($url);
 
         return $this;
     }
@@ -78,4 +86,16 @@ class TrickVideo
 
         return $this;
     }
+
+    private function convertLinkToEmbed(string $url): string|null
+    {
+        $youtube = "/^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/";
+        $youtubeEmbed = "/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^'&?\/\s]{11})/gi";
+        if (preg_match($youtube, $url, $matches)) {
+            return "//www.youtube.com/embed/" . $matches[1];
+        }
+
+        return null;
+    }
 }
+

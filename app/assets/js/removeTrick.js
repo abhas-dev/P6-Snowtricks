@@ -1,14 +1,49 @@
 import axios from "axios";
 
-const removeTrickBtn = document.querySelectorAll('#js-deleteTrick');
-// const tricksContainer = document.querySelector('.js-trick-card');
-const tricksContainer = document.querySelector('#tricks');
+
+// const tricks = document.querySelector('.js-trick-card');
+const trick = document.querySelectorAll('#js-deleteTrick');
+const tricksContainer = document.querySelector('.trick-container');
+tricksContainer.addEventListener('click', function (){
+    console.log('aaa');
+})
+
+
+
+// function onMutation(mutations) {
+//     mutations.forEach(
+//         function(mutation){
+//         if(mutation.)
+//             if(mutation.addedNodes.){
+//                 console.log(mutation.addedNodes[0])
+//                 // mutation.addedNodes[0].addEventListener('click', onRemoveTrick);
+//             }
+//     })
+// }
+
+function onMutation(mutations){
+    for(let mutation of mutations){
+        if(mutation.type === 'childList'){
+            console.log('mutatation detected' + mutation.childList);
+        }
+    }
+}
+
+const observer = new MutationObserver(onMutation);
+
+observer.observe(tricksContainer, {
+    childList: true,
+    subtree: true,
+    characterData : true
+})
+
+// const removeTrickBtn = document.querySelectorAll('#js-deleteTrick');
+// const tricksContainer = document.querySelector('#tricks');
 
 async function onRemoveTrick(e){
-    if( e.target.id === 'js-deleteTrick' ){
+    // if( e.target.id === 'js-deleteTrick' ){
         e.preventDefault();
         try {
-            console.log(this)
             const url = this.getAttribute('href');
             let slug = url.match( /trick\/(.+)\/delete/)[1];
 
@@ -27,8 +62,11 @@ async function onRemoveTrick(e){
         } catch (e) {
             console.log(e);
         }
-    }
+    // }
 }
+
+trick.forEach( removeBtn => removeBtn.addEventListener('click', onRemoveTrick));
+
 
 // async function onRemoveTrickDetected(e){
 //     if( e.target.id == 'js-deleteTrick' ){
@@ -50,6 +88,6 @@ async function onRemoveTrick(e){
 // document.body.addEventListener( 'click', onRemoveTrick);
 
 
-tricksContainer.addEventListener('click', onRemoveTrick);
+// tricksContainer.addEventListener('click', onRemoveTrick);
 
 

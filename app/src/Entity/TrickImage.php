@@ -25,11 +25,11 @@ class TrickImage
 
     /** @var UploadedFile */
     #[Assert\Image(
-        maxSize: 1024,
+        maxSize: 10240000,
         minWidth: 200,
-        maxWidth: 400,
+        maxWidth: 1920,
         minHeight: 200,
-        maxHeight: 400,
+        maxHeight: 1080,
         mimeTypes: ['image/jpeg', 'image/jpg', 'image/png'],
         mimeTypesMessage: 'Veuillez entrer un fichier valide',
         allowPortrait: false,

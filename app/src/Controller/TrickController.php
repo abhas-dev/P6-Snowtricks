@@ -102,6 +102,7 @@ class TrickController extends AbstractController
             if($trickImages) $trick->setMainTrickImage($trickImages[0]);
             $trick->setSlug(strtolower($this->slugger->slug($trick->getName())));
             $trick->setCreatedAt(new \DateTime('now'));
+            $trick->setAuthor($this->getUser());
             $this->entityManager->persist($trick);
             $this->entityManager->flush();
 
@@ -142,7 +143,7 @@ class TrickController extends AbstractController
         return $this->renderForm('trick/edit.html.twig', compact('form', 'trick'));
     }
 
-    #[Route('/trick/{slug}/delete', name: 'trick_delete', methods: ['DELETE'])]
+    #[Route('/trick/{slug}/delete', name: 'trick_delete', methods: ['GET', 'DELETE'])]
     public function delete(Request $request, Trick $trick)
     {
         if(!$trick){
@@ -152,7 +153,7 @@ class TrickController extends AbstractController
         $this->denyAccessUnlessGranted('CAN_DELETE', $trick, "Vous n'avez pas le droit d'acceder à ce trick");
 
         $data = json_decode($request->getContent(), true);
-
+//        dd($request->query);
         if($this->isCsrfTokenValid("delete-trick", $data['_token']))
         {
             foreach($trick->getTrickImages() as $trickImage)

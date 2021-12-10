@@ -26,7 +26,8 @@ class AppFixtures extends Fixture
 
     public function getVideoProviders(): array
     {
-        return ['Youtube', 'Vimeo', 'Daylimotion'];
+//        return ['Youtube', 'Vimeo', 'Daylimotion'];
+        return ['Youtube'];
     }
 
 

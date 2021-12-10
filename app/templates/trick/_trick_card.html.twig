@@ -1,5 +1,5 @@
 
-<div class="card rounded box" id="trick-{{ trick.slug }}">
+<div class="card rounded box js-trick-card" id="trick-{{ trick.slug }}">
 
     {% if trick.mainTrickImage is null %}
         <img src="{{ asset("uploads/snowboard-default.jpg") }}" class="img-fluid box-img-top card-img-top rounded-top" alt="Image d'un trick par defaut">
