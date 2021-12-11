@@ -47,6 +47,7 @@ final class TrickFactory extends ModelFactory
                 true
             ),
             'createdAt' => self::faker()->dateTimeBetween('-3 month', 'now'), // TODO add DATETIME ORM type manually
+            'trickVideos' => TrickVideoFactory::createMany(rand(2,4))
         ];
     }
 

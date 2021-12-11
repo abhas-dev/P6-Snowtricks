@@ -40,7 +40,7 @@ final class TrickVideoFactory extends ModelFactory
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
             'name' => self::faker()->text(),
-            'url' => self::faker()->text(),
+            'url' => "https://www.youtube.com/embed/SL1NtA_UJ34"
 //            https://www.youtube.com/watch?v=SL1NtA_UJ34
         ];
     }

@@ -23,22 +23,19 @@ class TrickType extends AbstractType
                 'label' => 'Nom du trick',
                 'attr' => [
                     'placeholder' => 'Nom du trick'
-                ],
-                'required' => false
+                ]
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description du trick',
                 'attr' => [
                     'placeholder' => 'Description du trick'
-                ],
-                'required' => false
+                ]
             ])
             ->add('trickCategory', EntityType::class, [
                 'label' => 'Catégorie',
                 'placeholder' => '-- Choisir une catégorie --',
                 'class' => TrickCategory::class,
-                'choice_label' => 'name',
-                'required' => false
+                'choice_label' => 'name'
 
             ])
 //            ->add('trickImages', FileType::class, [
@@ -65,7 +62,6 @@ class TrickType extends AbstractType
                 'by_reference' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'required' => false,
                 'error_bubbling' => false
             ])
             ->add('trickVideos', CollectionType::class, [
@@ -75,7 +71,6 @@ class TrickType extends AbstractType
                 'by_reference' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'required' => false,
                 'error_bubbling' => false
             ])
         ;

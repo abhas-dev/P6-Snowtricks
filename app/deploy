@@ -1,0 +1,2 @@
+#!/bin/sh
+rsync -av ./ 0j351_red@snowtricks.dev-tech.fr:~/sites/snowtricks.dev-tech.fr --include=public/build --include=public/.htaccess --exclude-from=.gitignore --exclude=".*"

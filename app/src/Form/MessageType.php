@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class MessageType extends AbstractType
 {
@@ -15,7 +16,12 @@ class MessageType extends AbstractType
         $builder
             ->add('content', TextareaType::class, [
                 'label' => 'Message',
-                'attr' => ['placeholder' => 'Votre message...']
+                'attr' => ['placeholder' => 'Votre message...'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Ce champs est obligatoire poster votre message'
+                    ])
+                ]
             ])
         ;
     }

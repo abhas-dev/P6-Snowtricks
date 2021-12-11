@@ -22,21 +22,18 @@ class EditTrickType extends AbstractType
                 'label' => 'Nom du trick',
                 'attr' => [
                     'placeholder' => 'Nom du trick'
-                ],
-                'required' => false
+                ]
             ])
             ->add('description', TextareaType::class, [
                 'label' => 'Description du trick',
                 'attr' => [
                     'placeholder' => 'Description du trick'
-                ],
-                'required' => false
+                ]
             ])
             ->add('trickCategory', EntityType::class, [
                 'label' => 'Catégorie',
                 'class' => TrickCategory::class,
-                'choice_label' => 'name',
-                'required' => false
+                'choice_label' => 'name'
             ])
             ->add('newTrickImages', CollectionType::class, [
                 'label' => false,
@@ -46,7 +43,6 @@ class EditTrickType extends AbstractType
                 'by_reference' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'required' => false,
                 'error_bubbling' => false
             ])
             ->add('newTrickVideos', CollectionType::class, [
@@ -56,7 +52,6 @@ class EditTrickType extends AbstractType
                 'by_reference' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
-                'required' => false,
                 'error_bubbling' => false
             ])
         ;
@@ -66,6 +61,9 @@ class EditTrickType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => EditTrickFormModel::class,
+            'attr' => [
+                'novalidate' => true
+            ]
         ]);
     }
 }

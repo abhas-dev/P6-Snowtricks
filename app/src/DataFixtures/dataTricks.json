@@ -3,11 +3,19 @@
     "1": "Truck Driver",
     "2": "Indy",
     "3": "Nose Grab",
-    "4": "Melon"
+    "4": "Melon",
+    "5": "One-Two",
+    "6": "Cross-rocket",
+    "7": "Roast beef",
+    "8": "Stiffy"
   },
   "Flips": {
     "1": "Hakon Flip",
-    "2": "Mac Twist"
+    "2": "Mac Twist",
+    "3": "Frontside Rodeo",
+    "4": "Chicane",
+    "5": "Underflip",
+    "6": "Rippey flip"
   },
   "Rotations": {
     "1": "720",
@@ -19,6 +27,8 @@
   },
   "Jumps": {
     "1": "Nollie",
-    "2": "Ollie"
+    "2": "Ollie",
+    "3": "Switch ollie",
+    "4": "Air-to-fakie"
   }
 }

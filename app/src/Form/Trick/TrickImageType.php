@@ -20,14 +20,12 @@ class TrickImageType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Nom',
                 'attr' => ['placeholder' => "Nom de l'image"],
-                'required' => false,
                 'constraints' => [
                     new NotBlank(['message' => 'Le nom doit etre renseigné'])
                 ]
             ])
             ->add('file', FileType::class, [
                 'label' => false,
-                'required' =>false,
                 'constraints' => [
                     new Image([
                         'maxSize' => 1024000,
