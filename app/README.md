@@ -29,16 +29,16 @@ Create an account (identical to your local session)
   chown username:username -R .
 ```
 
-*Application is available at http://127.0.0.1:8741
+\*Application is available at http://127.0.0.1:8741
 
-*WebUi for database (phpmyadmin) is available at http://127.0.0.1:8080
+\*WebUi for database (phpmyadmin) is available at http://127.0.0.1:8080
 
-*WebUi for mail catcher (mailhog) is available at http://127.0.0.1:8025
+\*WebUi for mail catcher (mailhog) is available at http://127.0.0.1:8025
 
 ### To configure database connexion
 
 ```yaml
-  DATABASE_URL="mysql://root:@127.0.0.1:3306/db_name?serverVersion=5.7"
+DATABASE_URL="mysql://root:@127.0.0.1:3306/db_name?serverVersion=5.7"
 ```
 
 ## Ready to use with
@@ -46,14 +46,13 @@ Create an account (identical to your local session)
 This docker-compose provides you :
 
 - PHP:8.0.12-apache-bullseye
-    - Composer
-    - Symfony CLI
-    - and some other php extentions
-    - nodejs, npm, yarn
+  - Composer
+  - Symfony CLI
+  - and some other php extentions
+  - nodejs, npm, yarn
 - mysql 5.7
 - phpmyadmin
 - mailhog
-
 
 ## Requirements
 
