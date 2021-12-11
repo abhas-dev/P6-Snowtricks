@@ -40,23 +40,6 @@
     </button>
 {{ form_end(form) }}
 
-    <div class="row">
-        {% for trickImage in trick.trickImages %}
-            <div id="trickImage-{{ trickImage.id }}" class="col-lg-3 mb-sm-2 d-flex justify-content-between align-items-center">
-                <div>
-                    <img src="{{ asset(trickImage.path) }}" class="img-thumbnail rounded" alt="{{ trickImage.name }}">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div>
-                            <label for="mainPicture">Principale</label>
-                            <input type="radio" name="mainPicture" class="js-mainPicture" data-mainPicture="{{ path('trick_setTricksMainPicture', {'slug': trick.slug, 'id': trickImage .id })}}" value="{{ trickImage.id }}">
-                        </div>
-                        <a href="{{ path('trick_image-delete', {'slug': trick.slug, 'id': trickImage .id }) }}" data-delete data-token="{{ csrf_token('delete-image') }}"><i class="fa fa-trash"></i> Supprimer</a>
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-
 
 
 

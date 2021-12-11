@@ -16,6 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
@@ -26,13 +27,15 @@ class TrickController extends AbstractController
     private SluggerInterface $slugger;
     private ImageService $imageService;
     private Paginator $paginator;
+    private RequestStack $requestStack;
 
-    public function __construct(EntityManagerInterface $entityManager, SluggerInterface $slugger, ImageService $imageService, Paginator $paginator)
+    public function __construct(EntityManagerInterface $entityManager, SluggerInterface $slugger, ImageService $imageService, Paginator $paginator, RequestStack $requestStack)
     {
         $this->entityManager = $entityManager;
         $this->slugger = $slugger;
         $this->imageService = $imageService;
         $this->paginator = $paginator;
+        $this->requestStack = $requestStack;
     }
 
 //    #[Route('/{category_slug}/{slug}', name: 'trick_show')]
@@ -116,13 +119,15 @@ class TrickController extends AbstractController
 
 
     #[Route('/trick/{slug}/edit', name: 'trick_edit')]
-    public function edit(Trick $trick, Request $request)
+    public function edit(Trick $trick)
     {
-        if(!$trick){
-            throw $this->createNotFoundException("Ce trick n'existe pas");
-        }
-
         $this->denyAccessUnlessGranted('CAN_EDIT', $trick, "Vous n'avez pas le droit d'acceder à ce trick");
+
+        $request = $this->requestStack->getCurrentRequest();
+        if($request->isXmlHttpRequest())
+        {
+            return $this->renderEditTemplate($request, $trick);
+        }
 
         // On injecte les données du trick dans le model (DTO)
         $trickModel = EditTrickFormModel::fromTrick($trick);
@@ -146,10 +151,6 @@ class TrickController extends AbstractController
     #[Route('/trick/{slug}/delete', name: 'trick_delete', methods: ['GET', 'DELETE'])]
     public function delete(Request $request, Trick $trick)
     {
-        if(!$trick){
-            throw $this->createNotFoundException("Ce trick n'existe pas");
-        }
-
         $this->denyAccessUnlessGranted('CAN_DELETE', $trick, "Vous n'avez pas le droit d'acceder à ce trick");
 
         $data = json_decode($request->getContent(), true);
@@ -176,16 +177,6 @@ class TrickController extends AbstractController
         ], 400);
     }
 
-//    #[Route('/trick/{slug}/edit-tab', name: 'trick_edit-tab')]
-//    public function changeDivContent(string $slug, Request $request): Response
-//    {
-//        $data = json_decode($request->getContent(), true);
-//        dd($data);
-//        return $this->json([
-//
-//        ]);
-//    }
-
     private function updateTrickFromDto(Trick $trick, EditTrickFormModel $trickModel, FormInterface $form){
         $trick->setName($trickModel->name);
         $trick->setDescription($trickModel->description);
@@ -207,6 +198,21 @@ class TrickController extends AbstractController
             if($newTrickVideo){
                 $trick->addTrickVideo($newTrickVideo);
             }
+        }
+    }
+
+    private function renderEditTemplate(Request $request, Trick $trick)
+    {
+        if($request->getContent() === 'image'){
+            return $this->json([
+                '_template' => $this->render('trick/_edit_imageTrick.html.twig', compact('trick')),
+            ]);
+        }
+        elseif($request->getContent() === 'video')
+        {
+            return $this->json([
+                '_template' => $this->render('trick/_edit_videoTrick.html.twig', compact('trick')),
+            ]);
         }
     }
 }

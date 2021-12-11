@@ -23,8 +23,7 @@ Encore
     .addEntry('app', './assets/app.js')
     .addEntry('formImage', './assets/js/formImage.js')
     .addEntry('editTrick', './assets/js/editTrick.js')
-    .addEntry('removeTrick', './assets/js/removeTrick.js')
-    .addEntry('loadmore', './assets/js/homepage_loadmore.js')
+    .addEntry('homepage', './assets/js/homepage.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

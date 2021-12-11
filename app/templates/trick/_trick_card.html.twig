@@ -20,7 +20,7 @@
                 {% if is_granted('ROLE_ADMIN') or trick.author == app.user %}
                     <div class="col-xl-3 d-sm-flex flex-xl-column">
                         <a class="fs-4 m-2" href="{{ path('trick_edit', {'slug': trick.slug }) }}"><i class="fa fa-edit"></i></a>
-                        <a class="fs-4 m-2 " id="js-deleteTrick" href="{{ path('trick_delete', {'slug': trick.slug}) }}" data-deleteTrick data-token="{{ csrf_token('delete-trick') }}"><i class="fa fa-trash"></i></a>
+                        <a class="fs-4 m-2 js-deleteTrick" href="{{ path('trick_delete', {'slug': trick.slug}) }}" data-deleteTrick data-token="{{ csrf_token('delete-trick') }}"><i class="fa fa-trash"></i></a>
 {#                        <button class="fs-4 m-2" id="js-editTrick" data-slug="{{ trick.slug }}"><i class="fa fa-edit"></i></button>#}
 {#                        <button class="fs-4 m-2" id="js-deleteTrick" data-slug="{{ trick.slug }}" data-deleteTrick data-token="{{ csrf_token('delete-trick') }}"><i class="fa fa-trash"></i></button>#}
                         {#                    <a class="fs-4 m-2" href="{{ path('trick_delete', {'slug': trick.slug, 'csrf_token': 'remove' }) }}"><i class="fa fa-trash"></i></a>#}

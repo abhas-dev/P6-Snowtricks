@@ -1,0 +1,15 @@
+<h4>Gestion des Videos</h4>
+
+<div class="row">
+    {% for trickVideo in trick.trickVideos %}
+        <div class="col-lg-4 mb-sm-2 my-3 trickVideo-{{ trickVideo.id }}">
+            <div class="ratio ratio-16x9">
+                <iframe width="560" height="315" src="{{ trickVideo.url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <button class="btn btn-primary mt-1" data-delete data-link="{{ path('trick_video-delete', {'slug': trick.slug, 'id': trickVideo.id}) }}" data-token="{{ csrf_token('delete-image') }}">Supprimer</button>
+        </div>
+    {% endfor %}
+</div>
+
+{#            <a href="{{ path('trick_video-delete', {'slug': trick.slug, 'id': trickVideo.id}) }}" data-delete data-token="{{ csrf_token('delete-image') }}">Supprimer</a>#}
+{#            <a href="{{ path('trick_image-delete', {'slug': trick.slug, 'id': trickImage .id }) }}" data-delete data-token="{{ csrf_token('delete-image') }}"><i class="fa fa-trash"></i> Supprimer</a>#}

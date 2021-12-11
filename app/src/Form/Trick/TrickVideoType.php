@@ -17,20 +17,17 @@ class TrickVideoType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label' => 'Nom',
-                'attr' => ['placeholder' => 'Nom de la video'],
-                'required' => false
+                'attr' => ['placeholder' => 'Nom de la video']
             ])
             ->add('url', TextType::class, [
                 'label' => 'Lien',
-                'attr' => ['placeholder' => 'Lien vers la video'],
-                'required' => false
+                'attr' => ['placeholder' => 'Lien vers la video']
             ])
             ->add('provider', EntityType::class,[
                 'label' => 'Provider',
                 'placeholder' => '-- Choisir un provider --',
                 'class' => VideoProvider::class,
-                'choice_label' => 'name',
-                'required' => true
+                'choice_label' => 'name'
             ])
         ;
     }
