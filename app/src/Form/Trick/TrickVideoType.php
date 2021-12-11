@@ -23,7 +23,7 @@ class TrickVideoType extends AbstractType
                 'label' => 'Lien',
                 'attr' => ['placeholder' => 'Lien vers la video']
             ])
-            ->add('provider', EntityType::class,[
+            ->add('provider', EntityType::class, [
                 'label' => 'Provider',
                 'placeholder' => '-- Choisir un provider --',
                 'class' => VideoProvider::class,

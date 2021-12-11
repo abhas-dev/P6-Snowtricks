@@ -18,16 +18,14 @@ class TrickVideoController extends AbstractController
         $trickVideo = $trickVideoRepository->find($id);
         $data = json_decode($request->getContent(), true);
 
-        if(!$trickVideo)
-        {
+        if (!$trickVideo) {
             return $this->json([
                 'code' => '403',
                 'message' => "La video n'existe pas"
             ], 403);
         }
 
-        if($this->isCsrfTokenValid('delete-image', $data['_token']))
-        {
+        if ($this->isCsrfTokenValid('delete-image', $data['_token'])) {
             $trickVideoId = $trickVideo->getId();
             $manager->remove($trickVideo);
             $manager->flush();
