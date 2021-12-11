@@ -98,4 +98,3 @@ class TrickVideo
         return null;
     }
 }
-
