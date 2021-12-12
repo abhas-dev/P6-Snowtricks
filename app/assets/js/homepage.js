@@ -1,69 +1,70 @@
 const axios = require("axios");
 
-const tricksBlock = document.querySelector('#tricks');
+const tricksBlock = document.querySelector("#tricks");
 
 async function onRemoveTrick(e) {
   e.preventDefault();
   try {
-    const url = this.getAttribute('href');
+    const url = this.getAttribute("href");
     let slug = url.match(/trick\/(.+)\/delete/)[1];
 
-    const response =
-        await axios
-            .delete(url, {
-              headers : {'X-Requested-With' : 'XMLHttpRequest'},
-              data : {"_token" : this.dataset.token}
-            })
-            .then(response => response.data)
-            .then(data => {
-              let trickDiv = document.getElementById("trick-" + slug);
-              data.code === 200 ? trickDiv.parentNode.removeChild(trickDiv)
-                                : alert(data.message)
-            })
-
+    const response = await axios
+      .delete(url, {
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+        data: { _token: this.dataset.token },
+      })
+      .then((response) => response.data)
+      .then((data) => {
+        let trickDiv = document.getElementById("trick-" + slug);
+        data.code === 200
+          ? trickDiv.parentNode.removeChild(trickDiv)
+          : alert(data.message);
+      });
   } catch (error) {
     console.log(error);
   }
 }
 
 function bindRemoveTrick() {
-  let removeTrickBtn = document.querySelectorAll('.js-deleteTrick');
+  let removeTrickBtn = document.querySelectorAll(".js-deleteTrick");
 
-  removeTrickBtn.forEach(removeBtn => {
-    removeBtn.removeEventListener('click', onRemoveTrick);
-    removeBtn.addEventListener('click', onRemoveTrick);
+  removeTrickBtn.forEach((removeBtn) => {
+    removeBtn.removeEventListener("click", onRemoveTrick);
+    removeBtn.addEventListener("click", onRemoveTrick);
   });
 }
 
 bindRemoveTrick();
 
-const loadMoreBtn = document.querySelector('#js-loadMore_tricks');
-const loadMoreSection = document.querySelector('#loadMoreSection');
+const loadMoreBtn = document.querySelector("#js-loadMore_tricks");
+const loadMoreSection = document.querySelector("#loadMoreSection");
 let nextPage = 2;
 
 async function getMoreTricks(e) {
   e.preventDefault();
-  const url = this.getAttribute('href');
-  loadMoreBtn.textContent = 'Chargement...';
+  const url = this.getAttribute("href");
+  loadMoreBtn.textContent = "Chargement...";
   await axios({
-    method : 'post',
-    url : `${url}?page=${nextPage}`,
-    headers : {
-      "X-Requested-With" : "XMLHttpRequest",
-      "Content-Type" : "application/json"
+    method: "post",
+    url: `${url}?page=${nextPage}`,
+    headers: {
+      "X-Requested-With": "XMLHttpRequest",
+      "Content-Type": "application/json",
     },
-    data : {lastTrick : this.dataset.lastTrick}
+    data: { lastTrick: this.dataset.lastTrick },
   })
-      .then(response => response.data)
-      .then(data => {
-        tricksBlock.insertAdjacentHTML('beforeend', data._template.content);
-        nextPage = data.nextPage;
-        !data.nextPage
-            ? loadMoreSection.innerHTML = "Il n'y a pas d'autre trick"
-            : loadMoreBtn.textContent = 'Charger Plus';
-        bindRemoveTrick();
-      })
-      .catch(error => { console.log(error); });
+    .then((response) => response.data)
+    .then((data) => {
+      tricksBlock.insertAdjacentHTML("beforeend", data._template.content);
+      nextPage = data.nextPage;
+      !data.nextPage
+        ? (loadMoreSection.innerHTML = "Il n'y a pas d'autre trick")
+        : (loadMoreBtn.textContent = "Charger Plus");
+      bindRemoveTrick();
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
-loadMoreBtn.addEventListener('click', getMoreTricks);
+loadMoreBtn.addEventListener("click", getMoreTricks);

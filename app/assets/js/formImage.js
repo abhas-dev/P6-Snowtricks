@@ -1,12 +1,15 @@
 const addFormToCollection = (e) => {
   const collectionHolder = document.querySelector(
-      '.' + e.currentTarget.dataset.collectionHolderClass);
+    "." + e.currentTarget.dataset.collectionHolderClass
+  );
 
-  const item = document.createElement('li');
+  const item = document.createElement("li");
   item.className = "my-2";
 
   item.innerHTML = collectionHolder.dataset.prototype.replace(
-      /__name__/g, collectionHolder.dataset.index);
+    /__name__/g,
+    collectionHolder.dataset.index
+  );
 
   collectionHolder.appendChild(item);
 
@@ -16,16 +19,17 @@ const addFormToCollection = (e) => {
 };
 
 const addImageFormDeleteLink = (tagFormLi) => {
-  const removeFormButton = document.createElement('button');
+  const removeFormButton = document.createElement("button");
   removeFormButton.classList = "btn btn-danger";
-  removeFormButton.innerText = 'Supprimer cette image';
+  removeFormButton.innerText = "Supprimer cette image";
   tagFormLi.append(removeFormButton);
 
-  removeFormButton.addEventListener('click', (e) => {
+  removeFormButton.addEventListener("click", (e) => {
     e.preventDefault();
     tagFormLi.remove();
   });
 };
 
-document.querySelectorAll('.add_item_link')
-    .forEach(btn => btn.addEventListener("click", addFormToCollection));
+document
+  .querySelectorAll(".add_item_link")
+  .forEach((btn) => btn.addEventListener("click", addFormToCollection));
