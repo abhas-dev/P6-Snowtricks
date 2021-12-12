@@ -20,7 +20,7 @@ const addFormToCollection = (e) => {
 };
 
 const addImageFormDeleteLink = (tagFormLi) => {
-    const removeFormButton = document.createElement('button')
+    const removeFormButton = document.createElement('button');
     removeFormButton.classList = "btn btn-danger";
     removeFormButton.innerText = 'Supprimer cette image';
     tagFormLi.append(removeFormButton);
@@ -29,7 +29,7 @@ const addImageFormDeleteLink = (tagFormLi) => {
         e.preventDefault();
         tagFormLi.remove();
     });
-}
+};
 
 document
     .querySelectorAll('.add_item_link')

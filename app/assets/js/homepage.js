@@ -1,10 +1,6 @@
 const axios = require("axios");
 
-const loadMoreBtn = document.querySelector('#js-loadMore_tricks');
 const tricksBlock = document.querySelector('#tricks');
-const loadMoreSection = document.querySelector('#loadMoreSection');
-let nextPage = 2;
-
 
 async function onRemoveTrick(e){
     e.preventDefault();
@@ -22,8 +18,8 @@ async function onRemoveTrick(e){
                 data.code === 200 ? trickDiv.parentNode.removeChild(trickDiv) : alert(data.message)
             })
 
-    } catch (e) {
-        console.log(e);
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -38,6 +34,10 @@ function bindRemoveTrick()
 }
 
 bindRemoveTrick();
+
+const loadMoreBtn = document.querySelector('#js-loadMore_tricks');
+const loadMoreSection = document.querySelector('#loadMoreSection');
+let nextPage = 2;
 
 async function getMoreTricks(e){
     e.preventDefault();
@@ -61,8 +61,8 @@ async function getMoreTricks(e){
             !data.nextPage ? loadMoreSection.innerHTML = "Il n'y a pas d'autre trick" : loadMoreBtn.textContent = 'Charger Plus';
             bindRemoveTrick();
         })
-        .catch(e => {
-            console.log(e);
+        .catch(error => {
+            console.log(error);
         });
 }
 
