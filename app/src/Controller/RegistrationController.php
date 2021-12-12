@@ -89,7 +89,7 @@ class RegistrationController extends AbstractController
         return $this->renderForm('registration/register.html.twig', ['registrationForm' => $form]);
     }
 
-    #[Route('/{id<\d+>?0}/{token}', name: 'registration_verify_account')]
+    #[Route('/registration-verify/{id<\d+>?0}/{token}', name: 'registration_verify_account')]
     public function verifyAccount(User $user, string $token): Response
     {
         // || ($this->isNotRequestedInTime($user->getAccountMustBeVerifiedBefore()))
@@ -104,10 +104,5 @@ class RegistrationController extends AbstractController
         $this->addFlash('success', 'Felicitations, votre compte a été validé avec succès. Vous pouvez maintenant vous connecter.');
 
         return $this->redirectToRoute('security_login');
-    }
-
-    private function isNotRequestedInTime(\DateTime $accountMustBeVerifiedBefore): bool
-    {
-        return (new \DateTime('now') > $accountMustBeVerifiedBefore);
     }
 }

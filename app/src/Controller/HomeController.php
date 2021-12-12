@@ -26,7 +26,6 @@ class HomeController extends AbstractController
     public function index(): Response
     {
         $request = $this->requestStack->getCurrentRequest();
-
         // check whether request is called directly via route or via Twig template
         $isMainRequest = $this->requestStack->getMainRequest() === $request;
 
