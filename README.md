@@ -22,13 +22,6 @@ Log into the PHP container
   docker exec -it www_docker_sf bash
 ```
 
-Create an account (identical to your local session)
-
-```bash
-  adduser username
-  chown username:username -R .
-```
-
 ### Install the project
 ```
 Composer install
