@@ -29,7 +29,7 @@ class TrickImage
         minWidth: 200,
         maxWidth: 1920,
         minHeight: 200,
-        maxHeight: 1080,
+        maxHeight: 1920,
         mimeTypes: ['image/jpeg', 'image/jpg', 'image/png'],
         mimeTypesMessage: 'Veuillez entrer un fichier valide',
         allowPortrait: false,

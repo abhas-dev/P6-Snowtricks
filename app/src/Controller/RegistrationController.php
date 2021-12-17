@@ -82,7 +82,6 @@ class RegistrationController extends AbstractController
                 "Votre compte a bien été enregistré. Veuillez confirmer votre adresse en cliquant sur lien dans le mail reçu."
             );
 
-
             return $this->redirectToRoute('homepage');
         }
 
@@ -93,8 +92,15 @@ class RegistrationController extends AbstractController
     public function verifyAccount(User $user, string $token): Response
     {
         // || ($this->isNotRequestedInTime($user->getAccountMustBeVerifiedBefore()))
-        if(($user->getRegistrationToken() === null) || ($user->getRegistrationToken() !== $token)){
+        if(($user->getRegistrationToken() === null) || ($user->getRegistrationToken() !== $token))
+        {
             throw $this->createAccessDeniedException();
+        }
+
+        if($user->getIsVerified())
+        {
+            $this->addFlash('danger', 'Ce compte à deja été validé');
+            return $this->redirectToRoute('homepage');
         }
 
         $user->setIsVerified(true);
@@ -103,6 +109,6 @@ class RegistrationController extends AbstractController
         $this->entityManager->flush();
         $this->addFlash('success', 'Felicitations, votre compte a été validé avec succès. Vous pouvez maintenant vous connecter.');
 
-        return $this->redirectToRoute('security_login');
+        return $this->redirectToRoute('homepage');
     }
 }

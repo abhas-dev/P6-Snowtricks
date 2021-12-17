@@ -22,7 +22,7 @@ const addFormToCollection = (e) => {
 const addImageFormDeleteLink = (tagFormLi) => {
     const removeFormButton = document.createElement('button');
     removeFormButton.classList = "btn btn-danger";
-    removeFormButton.innerText = 'Supprimer cette image';
+    removeFormButton.innerText = 'Supprimer le lien';
     tagFormLi.append(removeFormButton);
 
     removeFormButton.addEventListener('click', (e) => {
