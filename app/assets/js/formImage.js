@@ -1,36 +1,31 @@
 const addFormToCollection = (e) => {
-    const collectionHolder = document.querySelector('.' + e.currentTarget.dataset.collectionHolderClass);
+  const collectionHolder = document.querySelector(
+      '.' + e.currentTarget.dataset.collectionHolderClass);
 
-    const item = document.createElement('li');
-    item.className= "my-2";
+  const item = document.createElement('li');
+  item.className = "my-2";
 
-    item.innerHTML = collectionHolder
-        .dataset
-        .prototype
-        .replace(
-            /__name__/g,
-            collectionHolder.dataset.index
-        );
+  item.innerHTML = collectionHolder.dataset.prototype.replace(
+      /__name__/g, collectionHolder.dataset.index);
 
-    collectionHolder.appendChild(item);
+  collectionHolder.appendChild(item);
 
-    collectionHolder.dataset.index ++;
+  collectionHolder.dataset.index++;
 
-    addImageFormDeleteLink(item);
+  addImageFormDeleteLink(item);
 };
 
 const addImageFormDeleteLink = (tagFormLi) => {
-    const removeFormButton = document.createElement('button');
-    removeFormButton.classList = "btn btn-danger";
-    removeFormButton.innerText = 'Supprimer le lien';
-    tagFormLi.append(removeFormButton);
+  const removeFormButton = document.createElement('button');
+  removeFormButton.classList = "btn btn-danger";
+  removeFormButton.innerText = 'Supprimer le lien';
+  tagFormLi.append(removeFormButton);
 
-    removeFormButton.addEventListener('click', (e) => {
-        e.preventDefault();
-        tagFormLi.remove();
-    });
+  removeFormButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    tagFormLi.remove();
+  });
 };
 
-document
-    .querySelectorAll('.add_item_link')
+document.querySelectorAll('.add_item_link')
     .forEach(btn => btn.addEventListener("click", addFormToCollection));
