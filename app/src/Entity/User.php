@@ -46,6 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Trick::class)]
     private $tricks;
 
+    #[ORM\Column(type: 'string', nullable: true)]
     private $registrationToken;
 
     private $accountMustBeVerifiedBefore;
@@ -237,15 +238,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getRegistrationToken(): ?string
+    public function getRegistrationToken(): string
     {
         return $this->registrationToken;
     }
 
-    public function setRegistrationToken(?string $registrationToken): self
+    public function setRegistrationToken($registrationToken): self
     {
         $this->registrationToken = $registrationToken;
-
         return $this;
     }
 
