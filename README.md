@@ -24,7 +24,7 @@ Log into the PHP container
 
 ### Install the project
 ```
-Composer install
+composer install
 ```
 
 Configure database connexion(no password required)
